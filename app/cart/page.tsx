@@ -3,8 +3,9 @@
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
-import { formatPrice, getImageUrl } from "@/lib/utils";
+import { getImageUrl } from "@/lib/utils";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Shield, Truck, Package, Tag } from "lucide-react";
+import Price from "@/components/Price";
 
 export default function CartPage() {
   const { items, updateQuantity, removeFromCart, getCartTotal } = useCart();
@@ -98,9 +99,14 @@ export default function CartPage() {
                             {item.product.category}
                           </p>
                         )}
-                        <p className="mt-2 text-xl font-bold text-[var(--gold)]">
-                          {formatPrice(item.product.price)}
-                        </p>
+                        <div className="mt-2">
+                          <Price 
+                            amount={item.product.price}
+                            className="text-xl font-bold text-[var(--gold)]"
+                            symbolClassName="text-[var(--gold)]"
+                            symbolSize={20}
+                          />
+                        </div>
                       </div>
 
                       <div className="mt-4 flex items-center justify-between">
@@ -133,9 +139,12 @@ export default function CartPage() {
                         <div className="flex items-center gap-4">
                           <div className="text-right">
                             <p className="text-xs text-white/50">Subtotal</p>
-                            <p className="text-xl font-bold text-white">
-                              {formatPrice(item.product.price * item.quantity)}
-                            </p>
+                            <Price 
+                              amount={item.product.price * item.quantity}
+                              className="text-xl font-bold text-white"
+                              symbolClassName="text-white"
+                              symbolSize={20}
+                            />
                           </div>
                           <button
                             onClick={() => removeFromCart(item.product.id)}
@@ -165,7 +174,12 @@ export default function CartPage() {
                 <div className="space-y-4">
                   <div className="flex justify-between text-white/70">
                     <span>Subtotal ({items.length} items)</span>
-                    <span className="font-semibold text-white">{formatPrice(getCartTotal())}</span>
+                    <Price 
+                      amount={getCartTotal()}
+                      className="font-semibold text-white"
+                      symbolClassName="text-white"
+                      symbolSize={16}
+                    />
                   </div>
                   <div className="flex justify-between text-white/70">
                     <span>Shipping</span>
@@ -179,9 +193,12 @@ export default function CartPage() {
                   <div className="border-t-2 border-[var(--gold)]/20 pt-4">
                     <div className="flex justify-between">
                       <span className="text-lg font-semibold text-white">Total</span>
-                      <span className="text-2xl font-bold text-[var(--gold)]">
-                        {formatPrice(getCartTotal())}
-                      </span>
+                      <Price 
+                        amount={getCartTotal()}
+                        className="text-2xl font-bold text-[var(--gold)]"
+                        symbolClassName="text-[var(--gold)]"
+                        symbolSize={24}
+                      />
                     </div>
                   </div>
                 </div>

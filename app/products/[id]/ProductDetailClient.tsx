@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Product } from "@/types";
-import { formatPrice, getImageUrl } from "@/lib/utils";
+import { getImageUrl } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
 import { ShoppingBag, Check, Minus, Plus, Heart, Share2, Shield, Truck, Package, Star } from "lucide-react";
 import Link from "next/link";
+import Price from "@/components/Price";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -118,9 +119,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </div>
 
               <div className="flex items-baseline gap-3">
-                <p className="text-4xl font-bold text-[var(--gold)]">
-                  {formatPrice(product.price)}
-                </p>
+                <Price 
+                  amount={product.price}
+                  className="text-4xl font-bold text-[var(--gold)]"
+                  symbolClassName="text-[var(--gold)]"
+                  symbolSize={32}
+                />
                 <span className="rounded-full glass px-3 py-1 text-sm font-medium text-[var(--gold)]">
                   In Stock
                 </span>

@@ -1,11 +1,12 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
-import { formatPrice } from "@/lib/utils";
+import { formatPriceNumber } from "@/lib/utils";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, CreditCard, ShoppingBag } from "lucide-react";
+import Price from "@/components/Price";
 
 export default function CheckoutPage() {
   const { items, getCartTotal, clearCart } = useCart();
@@ -277,9 +278,21 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={isProcessing}
-                className="w-full rounded-lg luxury-button py-4 font-medium text-black transition-all disabled:opacity-50"
+                className="w-full rounded-lg luxury-button py-4 font-medium text-black transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {isProcessing ? "Processing..." : `Pay ${formatPrice(getCartTotal())}`}
+                {isProcessing ? (
+                  "Processing..."
+                ) : (
+                  <>
+                    <span>Pay</span>
+                    <Price 
+                      amount={getCartTotal()}
+                      className="font-semibold"
+                      symbolClassName="text-black"
+                      symbolSize={16}
+                    />
+                  </>
+                )}
               </button>
             </form>
           </div>
@@ -296,9 +309,12 @@ export default function CheckoutPage() {
                     <span className="text-white/70">
                       {item.product.name} × {item.quantity}
                     </span>
-                    <span className="font-medium text-white">
-                      {formatPrice(item.product.price * item.quantity)}
-                    </span>
+                    <Price 
+                      amount={item.product.price * item.quantity}
+                      className="font-medium text-white"
+                      symbolClassName="text-white"
+                      symbolSize={14}
+                    />
                   </div>
                 ))}
               </div>
@@ -306,7 +322,12 @@ export default function CheckoutPage() {
               <div className="space-y-3 border-t border-[var(--gold)]/20 pt-4">
                 <div className="flex justify-between text-white/70">
                   <span>Subtotal</span>
-                  <span className="font-medium text-white">{formatPrice(getCartTotal())}</span>
+                  <Price 
+                    amount={getCartTotal()}
+                    className="font-medium text-white"
+                    symbolClassName="text-white"
+                    symbolSize={16}
+                  />
                 </div>
                 <div className="flex justify-between text-white/70">
                   <span>Shipping</span>
@@ -314,12 +335,22 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-white/70">
                   <span>Tax</span>
-                  <span className="font-medium">{formatPrice(0)}</span>
+                  <Price 
+                    amount={0}
+                    className="font-medium"
+                    symbolClassName="text-white/70"
+                    symbolSize={16}
+                  />
                 </div>
                 <div className="border-t border-[var(--gold)]/20 pt-3">
                   <div className="flex justify-between text-lg font-semibold">
                     <span className="text-white">Total</span>
-                    <span className="text-[var(--gold)]">{formatPrice(getCartTotal())}</span>
+                    <Price 
+                      amount={getCartTotal()}
+                      className="text-[var(--gold)]"
+                      symbolClassName="text-[var(--gold)]"
+                      symbolSize={20}
+                    />
                   </div>
                 </div>
               </div>

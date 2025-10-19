@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@/types";
-import { formatPrice, getImageUrl } from "@/lib/utils";
+import { getImageUrl } from "@/lib/utils";
 import { ShoppingBag, Heart, Eye } from "lucide-react";
+import Price from "./Price";
 
 interface ProductCardProps {
   product: Product;
@@ -74,9 +75,12 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         {/* Price and Add to Cart */}
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-xl font-bold text-[var(--gold)]">
-              {formatPrice(product.price)}
-            </span>
+            <Price 
+              amount={product.price}
+              className="text-xl font-bold text-[var(--gold)]"
+              symbolClassName="text-[var(--gold)]"
+              symbolSize={20}
+            />
             <p className="text-xs text-white/50">Free Shipping</p>
           </div>
 
