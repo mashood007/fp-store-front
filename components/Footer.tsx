@@ -127,7 +127,7 @@ export default function Footer() {
                     key={label}
                     href={href}
                     aria-label={label}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-[var(--gold)] transition-all hover:bg-[var(--gold)] hover:text-black hover:scale-110"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-[var(--gold)] transition-all hover:bg-[var(--gold)] hover:text-black hover:scale-110"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -152,7 +152,7 @@ export default function Footer() {
                 {["Visa", "Mastercard", "PayPal", "Apple Pay"].map((method) => (
                   <div
                     key={method}
-                    className="flex h-8 items-center rounded border border-[var(--gold)]/30 bg-white/5 px-3 text-xs font-medium text-white/70"
+                    className="flex h-8 items-center rounded border border-[var(--gold)]/30 bg-black/50 px-3 text-xs font-medium text-white/70"
                   >
                     {method}
                   </div>

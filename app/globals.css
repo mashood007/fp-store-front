@@ -1,79 +1,106 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --gold: #bd8c55;
-  --gold-dark: #d97706;
-  --gold-light: #b96b44;
+@layer base {
+  :root {
+    --gold-darker: #8a6f5f;
+    --accent: #8a6f5f;
+    --background: #000000;
+    --foreground: #ffffff;
+
+    --gold: #bd8c55;
+    --gold-dark: #d97706;
+    --gold-light: #b96b44;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-black text-white;
+    font-family: var(--font-inter, Inter, system-ui, sans-serif);
+  }
+
+  .font-luxury {
+    font-family: var(--font-playfair, "Playfair Display", serif);
+  }
 }
 
-/* Font family variables - you can import these fonts in your layout */
+@layer components {
+  .glass {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(191, 160, 148, 0.2);
+  }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  .luxury-button {
+    @apply bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] hover:from-[var(--gold)] hover:to-[var(--gold-light)] transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl;
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  .shadow-luxury {
+    box-shadow: 0 4px 32px rgba(191, 160, 148, 0.15);
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
 
-.font-luxury {
-  font-family: var(--font-playfair), serif;
-}
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
 
-.font-elegant {
-  font-family: var(--font-cormorant), serif;
-}
+  .animate-progress {
+    animation: progress 3s ease-in-out;
+  }
 
-/* Custom scrollbar for webkit browsers */
-::-webkit-scrollbar {
-  width: 8px;
-}
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
 
-::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
   background: #111;
-}
+  }
 
-::-webkit-scrollbar-thumb {
-  background: var(--gold);
-  border-radius: 4px;
-}
+  ::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 9999px;
+  }
 
-::-webkit-scrollbar-thumb:hover {
+  ::-webkit-scrollbar-thumb:hover {
   background: var(--gold-dark);
-}
+  }
 
 /* Selection styling */
-::selection {
-  background: var(--gold);
-  color: black;
+  ::selection {
+    background: var(--gold);
+    color: black;
+  }
+
+  /* Form inputs */
+  input[type="checkbox"] {
+    accent-color: var(--gold);
+  }
+
+  /* Focus states */
+  .focus-ring {
+    outline: none;
+  }
+  
+  .focus-ring:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(191, 160, 148, 0.5);
+    border-color: var(--gold);
+  }
 }
 
-::-moz-selection {
-  background: var(--gold);
-  color: black;
-}
-
-/* Animation utilities */
-@keyframes fadeInUp {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -81,100 +108,10 @@ body {
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent 30%, rgba(240, 173, 78, 0.3) 50%, transparent 70%);
-  background-size: 1000px 100%;
-  animation: shimmer 3s infinite;
-}
-
-/* Glass morphism effect */
-.glass {
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.125);
-}
-
-/* Luxury button styles */
-.luxury-button {
-  background: linear-gradient(45deg, var(--gold), var(--gold-light));
-  box-shadow: 0 4px 15px 0 rgba(240, 173, 78, 0.3);
-  transition: all 0.3s ease;
-}
-
-.luxury-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px 0 rgba(240, 173, 78, 0.4);
-  background: linear-gradient(45deg, var(--gold-light), var(--gold));
-}
-
-/* Line clamp utilities for text truncation */
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-4 {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Custom Animations */
-@keyframes fade-in {
+@keyframes scaleIn {
   from {
     opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
@@ -182,16 +119,13 @@ body {
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out;
-}
-
-.animate-slide-up {
-  animation: slide-up 0.6s ease-out;
-}
-
-.animate-scale-in {
-  animation: scale-in 0.3s ease-out;
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 /* Custom Gradient Backgrounds */
@@ -199,33 +133,29 @@ body {
   background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
 }
 
-/* Custom Shadow Effects */
-.shadow-soft {
-  box-shadow: 0 2px 8px rgba(240, 173, 78, 0.15);
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }
 
-.shadow-luxury {
-  box-shadow: 0 10px 30px rgba(240, 173, 78, 0.2), 0 1px 3px rgba(240, 173, 78, 0.1);
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --gold: #e6c200;
+    --gold-light: #ffdb4d;
+  }
 }
 
-/* Gradient Text */
-.gradient-text {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Button Styles */
-.btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full luxury-button px-8 py-4 font-medium text-black transition-all active:scale-95;
-}
-
-.btn-secondary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-[var(--gold)] bg-transparent px-8 py-4 font-medium text-[var(--gold)] transition-all hover:bg-[var(--gold)] hover:text-black active:scale-95;
-}
-
-/* Section Spacing */
-.section-padding {
-  @apply py-16 md:py-24 lg:py-32;
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

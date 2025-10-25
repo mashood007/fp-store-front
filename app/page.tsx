@@ -226,13 +226,13 @@ export default async function HomePage() {
       </section>
 
       {/* Newsletter/CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-[var(--gold-dark)] to-[var(--gold)]">
+      <section className="section-padding bg-black">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-4 font-luxury text-4xl font-bold text-black md:text-5xl">
+            <h2 className="mb-4 font-luxury text-4xl font-bold text-white md:text-5xl">
               Join Our Fragrance Community
             </h2>
-            <p className="mb-8 text-lg text-black/80">
+            <p className="mb-8 text-lg text-white/70">
               Subscribe to get special offers, free giveaways, and exclusive deals.
             </p>
             
@@ -240,9 +240,9 @@ export default async function HomePage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 rounded-full border-0 bg-black/10 px-6 py-4 text-black placeholder:text-black/50 focus:outline-none focus:ring-2 focus:ring-black/30 backdrop-blur-sm"
+                className="flex-1 rounded-full border border-[var(--gold)]/30 bg-black/50 px-6 py-4 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/30 backdrop-blur-sm"
               />
-              <button type="submit" className="rounded-full bg-black px-8 py-4 font-medium text-[var(--gold)] transition-all hover:bg-black/80 hover:shadow-lg">
+              <button type="submit" className="rounded-full bg-[var(--gold)] px-8 py-4 font-medium text-black transition-all hover:bg-[var(--gold-light)] hover:shadow-lg">
                 Subscribe
               </button>
             </form>

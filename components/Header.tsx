@@ -2,18 +2,34 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingBag, Search, Menu, X, User, Heart } from "lucide-react";
+import { ShoppingBag, Search, Menu, X, User, Heart, LogOut, Package, Settings, ChevronDown } from "lucide-react";
 import { useCart } from "@/context/CartContext";
-import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 export default function Header() {
   const { getCartCount } = useCart();
+  const { customer, isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
   const pathname = usePathname();
   const cartCount = getCartCount();
+  
+  const accountDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (accountDropdownRef.current && !accountDropdownRef.current.contains(event.target as Node)) {
+        setIsAccountDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +38,12 @@ export default function Header() {
       setSearchQuery("");
       setIsMenuOpen(false);
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsAccountDropdownOpen(false);
+    router.push("/");
   };
 
   const isActive = (path: string) => pathname === path;
@@ -87,7 +109,7 @@ export default function Header() {
                 placeholder="Search perfumes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-48 rounded-full border border-[var(--gold)]/30 bg-white/5 py-2 pl-4 pr-10 text-sm text-white transition-all placeholder:text-white/50 focus:w-64 focus:border-[var(--gold)] focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/30 lg:w-64"
+                className="w-48 rounded-full border border-[var(--gold)]/30 bg-black/50 py-2 pl-4 pr-10 text-sm text-white transition-all placeholder:text-white/50 focus:w-64 focus:border-[var(--gold)] focus:bg-black/70 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/30 lg:w-64"
               />
               <button
                 type="submit"
@@ -99,19 +121,71 @@ export default function Header() {
 
             {/* Wishlist Icon */}
             <button
-              className="relative flex items-center justify-center rounded-full p-2.5 text-white/80 transition-all hover:bg-white/5 hover:text-[var(--gold)]"
+              className="relative flex items-center justify-center rounded-full p-2.5 text-white/80 transition-all hover:bg-black/50 hover:text-[var(--gold)]"
               aria-label="Wishlist"
             >
               <Heart className="h-5 w-5" />
             </button>
 
-            {/* Account Icon */}
-            <button
-              className="relative flex items-center justify-center rounded-full p-2.5 text-white/80 transition-all hover:bg-white/5 hover:text-[var(--gold)]"
-              aria-label="Account"
-            >
-              <User className="h-5 w-5" />
-            </button>
+            {/* Account Icon/Dropdown */}
+            <div className="relative" ref={accountDropdownRef}>
+              {isAuthenticated ? (
+                <button
+                  onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
+                  className="relative flex items-center gap-2 rounded-full px-3 py-2 text-white/80 transition-all hover:bg-black/50 hover:text-[var(--gold)]"
+                  aria-label="Account menu"
+                >
+                  <User className="h-5 w-5" />
+                  <span className="hidden lg:block text-sm font-medium">
+                    {customer?.name?.split(' ')[0] || 'Account'}
+                  </span>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isAccountDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+              ) : (
+                <Link
+                  href="/auth/login"
+                  className="relative flex items-center justify-center rounded-full p-2.5 text-white/80 transition-all hover:bg-black/50 hover:text-[var(--gold)]"
+                  aria-label="Login"
+                >
+                  <User className="h-5 w-5" />
+                </Link>
+              )}
+
+              {/* Account Dropdown */}
+              {isAuthenticated && isAccountDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-56 rounded-lg glass border border-[var(--gold)]/20 shadow-xl z-50">
+                  <div className="p-4 border-b border-[var(--gold)]/20">
+                    <p className="text-sm font-medium text-white">{customer?.name}</p>
+                    <p className="text-xs text-white/60 truncate">{customer?.email}</p>
+                  </div>
+                  <div className="py-2">
+                    <Link
+                      href="/account/profile"
+                      onClick={() => setIsAccountDropdownOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-white/80 hover:bg-black/50 hover:text-[var(--gold)] transition-colors"
+                    >
+                      <Settings className="h-4 w-4" />
+                      Profile Settings
+                    </Link>
+                    <Link
+                      href="/account/orders"
+                      onClick={() => setIsAccountDropdownOpen(false)}
+                      className="flex items-center gap-3 px-4 py-2 text-sm text-white/80 hover:bg-black/50 hover:text-[var(--gold)] transition-colors"
+                    >
+                      <Package className="h-4 w-4" />
+                      Order History
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex w-full items-center gap-3 px-4 py-2 text-sm text-white/80 hover:bg-black/50 hover:text-red-400 transition-colors"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Cart Icon */}
             <Link
@@ -161,7 +235,7 @@ export default function Header() {
                   placeholder="Search perfumes..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-full border border-[var(--gold)]/30 bg-white/5 py-2.5 pl-4 pr-10 text-sm text-white transition-all placeholder:text-white/50 focus:border-[var(--gold)] focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/30"
+                  className="w-full rounded-full border border-[var(--gold)]/30 bg-black/50 py-2.5 pl-4 pr-10 text-sm text-white transition-all placeholder:text-white/50 focus:border-[var(--gold)] focus:bg-black/70 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/30"
                 />
                 <button
                   type="submit"
@@ -187,7 +261,7 @@ export default function Header() {
                   className={`block rounded-lg px-4 py-3 text-base font-medium transition-all ${
                     isActive(item.href)
                       ? "bg-[var(--gold)]/20 text-[var(--gold)]"
-                      : "text-white/80 hover:bg-white/5 hover:text-[var(--gold)]"
+                      : "text-white/80 hover:bg-black/50 hover:text-[var(--gold)]"
                   }`}
                 >
                   {item.label}
@@ -196,15 +270,64 @@ export default function Header() {
             </div>
 
             {/* Mobile Actions */}
-            <div className="mt-4 flex gap-3 border-t border-[var(--gold)]/20 pt-4">
-              <button className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[var(--gold)]/30 py-3 text-sm font-medium text-[var(--gold)] transition-all hover:bg-white/5">
-                <User className="h-4 w-4" />
-                Account
-              </button>
-              <button className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[var(--gold)]/30 py-3 text-sm font-medium text-[var(--gold)] transition-all hover:bg-white/5">
-                <Heart className="h-4 w-4" />
-                Wishlist
-              </button>
+            <div className="mt-4 border-t border-[var(--gold)]/20 pt-4">
+              {isAuthenticated ? (
+                <div className="space-y-2">
+                  <div className="mb-3 p-3 rounded-lg bg-black/50 border border-[var(--gold)]/20">
+                    <p className="text-sm font-medium text-white">{customer?.name}</p>
+                    <p className="text-xs text-white/60 truncate">{customer?.email}</p>
+                  </div>
+                  <Link
+                    href="/account/profile"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white/80 hover:bg-black/50 hover:text-[var(--gold)] transition-all"
+                  >
+                    <Settings className="h-4 w-4" />
+                    Profile Settings
+                  </Link>
+                  <Link
+                    href="/account/orders"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white/80 hover:bg-black/50 hover:text-[var(--gold)] transition-all"
+                  >
+                    <Package className="h-4 w-4" />
+                    Order History
+                  </Link>
+                  <button
+                    onClick={() => { handleLogout(); setIsMenuOpen(false); }}
+                    className="flex w-full items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white/80 hover:bg-black/50 hover:text-red-400 transition-all"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Sign Out
+                  </button>
+                  <button className="flex w-full items-center justify-center gap-2 rounded-full border border-[var(--gold)]/30 py-3 text-sm font-medium text-[var(--gold)] transition-all hover:bg-black/50 mt-4">
+                    <Heart className="h-4 w-4" />
+                    Wishlist
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <Link
+                    href="/auth/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 rounded-full bg-[var(--gold)] py-3 text-sm font-medium text-black transition-all hover:bg-[var(--gold-light)]"
+                  >
+                    <User className="h-4 w-4" />
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/auth/register"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 rounded-full border border-[var(--gold)]/30 py-3 text-sm font-medium text-[var(--gold)] transition-all hover:bg-black/50"
+                  >
+                    Create Account
+                  </Link>
+                  <button className="flex w-full items-center justify-center gap-2 rounded-full border border-[var(--gold)]/30 py-3 text-sm font-medium text-[var(--gold)] transition-all hover:bg-black/50">
+                    <Heart className="h-4 w-4" />
+                    Wishlist
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}
