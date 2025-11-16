@@ -2,17 +2,8 @@ import { getProduct, getProducts } from "@/lib/api";
 import ProductDetailClient from "./ProductDetailClient";
 import { notFound } from "next/navigation";
 
-export async function generateStaticParams() {
-  try {
-    const { products } = await getProducts({ limit: 100 });
-    return products.map((product) => ({
-      id: product.friendlyId,
-    }));
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
-  }
-}
+// Force dynamic rendering for product detail pages
+export const dynamic = 'force-dynamic';
 
 export default async function ProductDetailPage({
   params,

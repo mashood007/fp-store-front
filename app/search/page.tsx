@@ -2,6 +2,10 @@ import { searchProducts } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
+import { Product } from "@/types";
+
+// Force dynamic rendering for search results
+export const dynamic = 'force-dynamic';
 
 interface SearchParams {
   q?: string;
@@ -13,7 +17,19 @@ export default async function SearchPage({
   searchParams: SearchParams;
 }) {
   const query = searchParams.q || "";
-  const { products, pagination } = await searchProducts(query);
+  
+  // Fetch products with error handling
+  let products: Product[] = [];
+  let pagination = { total: 0, limit: 0, offset: 0 };
+  
+  try {
+    const result = await searchProducts(query);
+    products = result.products;
+    pagination = result.pagination;
+  } catch (error) {
+    console.error("Error fetching search results:", error);
+    // Continue rendering with empty results
+  }
 
   return (
     <div className="min-h-screen bg-black py-12">

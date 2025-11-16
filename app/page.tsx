@@ -2,9 +2,21 @@ import { getProducts } from "@/lib/api";
 import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
+import { Product } from "@/types";
+
+// Force dynamic rendering since we need real-time product data
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const { products } = await getProducts({ limit: 8 });
+  // Fetch products with error handling
+  let products: Product[] = [];
+  try {
+    const result = await getProducts({ limit: 8 });
+    products = result.products;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    // Continue rendering with empty products array
+  }
 
   const categories = [
     {
