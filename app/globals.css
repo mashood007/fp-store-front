@@ -1,18 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --gold-darker: #8a6f5f;
-    --accent: #8a6f5f;
-    --background: #000000;
-    --foreground: #ffffff;
-
-    --gold: #bd8c55;
-    --gold-dark: #d97706;
-    --gold-light: #b96b44;
+    --primary: #000000;
+    --secondary: #4b5563;
+    --accent: #d4c5b0;
+    --background: #ffffff;
+    --foreground: #111827;
+    --light-gray: #f5f5f5;
   }
 
   html {
@@ -20,30 +18,12 @@
   }
 
   body {
-    @apply bg-black text-white;
+    @apply bg-white text-gray-900;
     font-family: var(--font-inter, Inter, system-ui, sans-serif);
-  }
-
-  .font-luxury {
-    font-family: var(--font-playfair, "Playfair Display", serif);
   }
 }
 
 @layer components {
-  .glass {
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(191, 160, 148, 0.2);
-  }
-
-  .luxury-button {
-    @apply bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] hover:from-[var(--gold)] hover:to-[var(--gold-light)] transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl;
-  }
-
-  .shadow-luxury {
-    box-shadow: 0 4px 32px rgba(191, 160, 148, 0.15);
-  }
-
   .animate-fade-in {
     animation: fadeIn 0.3s ease-out;
   }
@@ -52,48 +32,33 @@
     animation: scaleIn 0.2s ease-out;
   }
 
-  .animate-progress {
-    animation: progress 3s ease-in-out;
-  }
-
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-  background: #111;
+    background: #f5f5f5;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--gold);
+    background: #d4c5b0;
     border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-dark);
+    background: #c4b5a0;
   }
 
-/* Selection styling */
+  /* Selection styling */
   ::selection {
-    background: var(--gold);
-    color: black;
+    background: #d4c5b0;
+    color: #000000;
   }
 
   /* Form inputs */
   input[type="checkbox"] {
-    accent-color: var(--gold);
-  }
-
-  /* Focus states */
-  .focus-ring {
-    outline: none;
-  }
-  
-  .focus-ring:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(191, 160, 148, 0.5);
-    border-color: var(--gold);
+    accent-color: #000000;
   }
 }
 
@@ -116,35 +81,6 @@
   to {
     opacity: 1;
     transform: scale(1);
-  }
-}
-
-@keyframes progress {
-  from {
-    width: 0%;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-/* Custom Gradient Backgrounds */
-.bg-gradient-luxury {
-  background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
-}
-
-/* Print styles */
-@media print {
-  .no-print {
-    display: none !important;
-  }
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  :root {
-    --gold: #e6c200;
-    --gold-light: #ffdb4d;
   }
 }
 

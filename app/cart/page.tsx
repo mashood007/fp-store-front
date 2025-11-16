@@ -12,21 +12,21 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-black py-20">
+      <div className="min-h-screen bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-md text-center">
             <div className="mb-6 flex justify-center">
-              <div className="rounded-full glass p-12 shadow-luxury">
-                <ShoppingBag className="h-20 w-20 text-[var(--gold)]/50" />
+              <div className="rounded-full bg-gray-50 border border-gray-200 p-12 shadow-soft">
+                <ShoppingBag className="h-20 w-20 text-[var(--accent)]/50" />
               </div>
             </div>
-            <h1 className="mb-4 font-luxury text-4xl font-bold text-white">
+            <h1 className="mb-4 font-luxury text-4xl font-bold text-gray-900">
               Your cart is empty
             </h1>
-            <p className="mb-8 text-lg text-white/70">
-              Discover our collection of premium perfumes and find your signature scent.
+            <p className="mb-8 text-lg text-gray-600">
+              Discover our collection of LED mirrors, lights, and home decor to transform your space.
             </p>
-            <Link href="/products" className="btn-primary group">
+            <Link href="/products" className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-8 py-4 font-medium text-white transition-all hover:bg-[var(--wood-tone)] hover:shadow-lg group">
               Start Shopping
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Link>
@@ -37,19 +37,19 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black py-8 md:py-12">
+    <div className="min-h-screen bg-white py-8 md:py-12">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="font-luxury text-4xl font-bold text-[var(--gold)] md:text-5xl">
+            <h1 className="font-luxury text-4xl font-bold text-[var(--accent)] md:text-5xl">
               Shopping Cart
             </h1>
-            <p className="mt-2 text-white/70">
+            <p className="mt-2 text-gray-600">
               {items.length} {items.length === 1 ? "item" : "items"} in your cart
             </p>
           </div>
-          <Link href="/products" className="group flex items-center gap-2 text-[var(--gold)] transition-colors hover:text-[var(--gold-light)]">
+          <Link href="/products" className="group flex items-center gap-2 text-[var(--accent)] transition-colors hover:text-[var(--wood-tone)]">
             <ArrowRight className="h-4 w-4 rotate-180 transition-transform group-hover:-translate-x-1" />
             Continue Shopping
           </Link>

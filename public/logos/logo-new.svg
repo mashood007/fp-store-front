@@ -1,0 +1,24 @@
+<svg width="800" height="300" viewBox="0 0 800 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Modern Clean SS TECH Logo - Black & Gold -->
+  
+  <!-- Background Circle (optional, can be removed) -->
+  <circle cx="150" cy="150" r="100" fill="#c9a961" opacity="0.15"/>
+  <circle cx="250" cy="150" r="100" fill="#000000" opacity="0.08"/>
+  
+  <!-- First S - Gold -->
+  <path d="M120 90 C120 70 135 60 155 60 L175 60 C195 60 210 70 210 90 C210 105 200 115 185 120 L145 130 C135 133 130 140 130 150 C130 165 140 175 155 175 L175 175 C185 175 195 170 195 160" 
+        stroke="#c9a961" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Second S - Black -->
+  <path d="M240 90 C240 70 255 60 275 60 L295 60 C315 60 330 70 330 90 C330 105 320 115 305 120 L265 130 C255 133 250 140 250 150 C250 165 260 175 275 175 L295 175 C305 175 315 170 315 160" 
+        stroke="#000000" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- TECH text with modern font -->
+  <g>
+    <text x="420" y="170" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="#000000" letter-spacing="4">TECH</text>
+  </g>
+  
+  <!-- Subtle accent line -->
+  <line x1="420" y1="190" x2="650" y2="190" stroke="#c9a961" stroke-width="4" stroke-linecap="round"/>
+</svg>
+

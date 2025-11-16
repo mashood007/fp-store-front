@@ -3,53 +3,53 @@ import { ArrowRight } from "lucide-react";
 
 const categories = [
   {
-    name: "Men's Fragrances",
-    slug: "men",
-    description: "Bold and sophisticated scents for men",
+    name: "LED Mirrors",
+    slug: "mirrors",
+    description: "Smart mirrors with ambient LED lighting",
     count: "50+ Products",
   },
   {
-    name: "Women's Fragrances",
-    slug: "women",
-    description: "Elegant and captivating perfumes for women",
+    name: "Decorative Lights",
+    slug: "lights",
+    description: "Modern lighting solutions for every room",
     count: "60+ Products",
   },
   {
-    name: "Unisex Fragrances",
-    slug: "unisex",
-    description: "Versatile scents for everyone",
+    name: "Home Decor",
+    slug: "decor",
+    description: "Elegant accessories for modern spaces",
     count: "30+ Products",
   },
   {
     name: "Luxury Collection",
     slug: "luxury",
-    description: "Premium and exclusive fragrances",
+    description: "Premium and exclusive home accessories",
     count: "25+ Products",
   },
   {
-    name: "Fresh & Citrus",
-    slug: "fresh",
-    description: "Light and refreshing scents",
+    name: "Bathroom Fixtures",
+    slug: "bathroom",
+    description: "Contemporary bathroom lighting and decor",
     count: "40+ Products",
   },
   {
-    name: "Woody & Spicy",
-    slug: "woody",
-    description: "Warm and earthy fragrances",
+    name: "Smart Home",
+    slug: "smart",
+    description: "IoT-enabled lighting and mirrors",
     count: "35+ Products",
   },
 ];
 
 export default function CategoriesPage() {
   return (
-    <div className="min-h-screen bg-black py-12">
+    <div className="min-h-screen bg-white py-12">
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
-          <h1 className="mb-4 font-luxury text-5xl font-bold text-[var(--gold)]">
+          <h1 className="mb-4 font-luxury text-5xl font-bold text-[var(--accent)]">
             Browse by Category
           </h1>
-          <p className="text-lg text-white/70">
-            Find your perfect scent in our curated collections
+          <p className="text-lg text-gray-600">
+            Find the perfect pieces to illuminate and enhance your space
           </p>
         </div>
 
@@ -58,22 +58,22 @@ export default function CategoriesPage() {
             <Link
               key={category.slug}
               href={`/products?category=${category.slug}`}
-              className="group relative overflow-hidden rounded-2xl glass p-8 shadow-sm transition-all hover:shadow-luxury border border-[var(--gold)]/20"
+              className="group relative overflow-hidden rounded-2xl glass border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-luxury"
             >
               <div className="relative z-10">
-                <h2 className="mb-2 font-luxury text-2xl font-bold text-white">
+                <h2 className="mb-2 font-luxury text-2xl font-bold text-gray-900">
                   {category.name}
                 </h2>
-                <p className="mb-4 text-white/70">{category.description}</p>
-                <div className="mb-4 text-sm font-medium text-[var(--gold)]">
+                <p className="mb-4 text-gray-600">{category.description}</p>
+                <div className="mb-4 text-sm font-medium text-[var(--accent)]">
                   {category.count}
                 </div>
-                <span className="inline-flex items-center gap-2 text-[var(--gold)] font-medium">
+                <span className="inline-flex items-center gap-2 text-[var(--accent)] font-medium">
                   Explore Collection
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>
-              <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-full bg-[var(--gold)]/10 opacity-50 transition-transform group-hover:scale-150"></div>
+              <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-full bg-[var(--accent)]/10 opacity-50 transition-transform group-hover:scale-150"></div>
             </Link>
           ))}
         </div>

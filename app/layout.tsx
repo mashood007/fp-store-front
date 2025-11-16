@@ -17,8 +17,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Flëur d'Or - Luxury Perfume Boutique",
-  description: "Discover the finest collection of luxury perfumes and fragrances. Experience elegance and sophistication with Flëur d'Or.",
+  title: "SS Tech - Premium Home Decor & Lighting",
+  description: "Transform your space with our exquisite collection of LED mirrors, decorative lights, and modern home decor. Elevate your interior design with SS Tech.",
 };
 
 export default function RootLayout({

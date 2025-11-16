@@ -4,65 +4,58 @@ import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react"
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--gold)]/20 bg-black">
+    <footer className="border-t border-gray-200 bg-white">
       <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="lg:col-span-2">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="relative h-12 w-12">
-                <Image
-                  src="/logos/logo2.png"
-                  alt="Flëur d'Or"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <h3 className="font-luxury text-2xl font-bold text-[var(--gold)]">
-                Flëur d&apos;Or
-              </h3>
+          <div>
+            <div className="mb-4">
+              <img 
+                src="/logos/logo-new.svg" 
+                alt="SS Tech" 
+                className="h-12 w-auto"
+              />
             </div>
-            <p className="mb-4 text-sm leading-relaxed text-white/70">
-              Your destination for premium perfumes and luxury fragrances. 
-              Discover authentic scents from the world&apos;s finest fragrance houses.
+            <p className="mb-4 text-sm leading-relaxed text-gray-600">
+              Your destination for premium home furniture and modern decor solutions.
             </p>
             
             {/* Contact Info */}
-            <div className="space-y-2 text-sm text-white/70">
+            <div className="space-y-2 text-sm text-gray-600">
               <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-[var(--gold)]" />
-                <a href="mailto:info@fleurdor.com" className="hover:text-[var(--gold)] transition-colors">
-                  info@fleurdor.com
+                <Mail className="h-4 w-4" />
+                <a href="mailto:info@homedecor.com" className="hover:text-gray-900 transition-colors">
+                  info@homedecor.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-[var(--gold)]" />
-                <a href="tel:+1234567890" className="hover:text-[var(--gold)] transition-colors">
+                <Phone className="h-4 w-4" />
+                <a href="tel:+1234567890" className="hover:text-gray-900 transition-colors">
                   +1 (234) 567-890
                 </a>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-[var(--gold)]" />
-                <span>123 Fragrance St, New York, NY</span>
+                <MapPin className="h-4 w-4" />
+                <span>Dubai, UAE</span>
               </div>
             </div>
           </div>
 
           {/* Shop */}
           <div>
-            <h4 className="mb-4 font-semibold text-[var(--gold)]">Shop</h4>
+            <h4 className="mb-4 font-semibold text-gray-900">Shop</h4>
             <ul className="space-y-2">
               {[
                 { href: "/products", label: "All Products" },
                 { href: "/categories", label: "Categories" },
-                { href: "/products?category=men", label: "Men's Fragrances" },
-                { href: "/products?category=women", label: "Women's Fragrances" },
-                { href: "/products?category=unisex", label: "Unisex Fragrances" },
+                { href: "/products?category=living-room", label: "Living Room" },
+                { href: "/products?category=bedroom", label: "Bedroom" },
+                { href: "/products?category=decoration", label: "Decoration" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/70 transition-all hover:text-[var(--gold)] hover:translate-x-1 inline-block"
+                    className="text-sm text-gray-600 transition-colors hover:text-gray-900"
                   >
                     {link.label}
                   </Link>
@@ -73,7 +66,7 @@ export default function Footer() {
 
           {/* Customer Service */}
           <div>
-            <h4 className="mb-4 font-semibold text-[var(--gold)]">Customer Service</h4>
+            <h4 className="mb-4 font-semibold text-gray-900">Customer Service</h4>
             <ul className="space-y-2">
               {[
                 { href: "/about", label: "About Us" },
@@ -85,7 +78,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/70 transition-all hover:text-[var(--gold)] hover:translate-x-1 inline-block"
+                    className="text-sm text-gray-600 transition-colors hover:text-gray-900"
                   >
                     {link.label}
                   </Link>
@@ -94,10 +87,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Legal & Social */}
           <div>
-            <h4 className="mb-4 font-semibold text-[var(--gold)]">Legal</h4>
-            <ul className="space-y-2">
+            <h4 className="mb-4 font-semibold text-gray-900">Legal</h4>
+            <ul className="space-y-2 mb-6">
               {[
                 { href: "/privacy", label: "Privacy Policy" },
                 { href: "/terms", label: "Terms of Service" },
@@ -106,7 +99,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/70 transition-all hover:text-[var(--gold)] hover:translate-x-1 inline-block"
+                    className="text-sm text-gray-600 transition-colors hover:text-gray-900"
                   >
                     {link.label}
                   </Link>
@@ -115,8 +108,8 @@ export default function Footer() {
             </ul>
 
             {/* Social Media */}
-            <div className="mt-6">
-              <h4 className="mb-3 font-semibold text-[var(--gold)]">Follow Us</h4>
+            <div>
+              <h4 className="mb-3 font-semibold text-gray-900">Follow Us</h4>
               <div className="flex gap-2">
                 {[
                   { Icon: Facebook, href: "#", label: "Facebook" },
@@ -127,7 +120,7 @@ export default function Footer() {
                     key={label}
                     href={href}
                     aria-label={label}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-[var(--gold)] transition-all hover:bg-[var(--gold)] hover:text-black hover:scale-110"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-700 transition-all hover:bg-gray-900 hover:text-white"
                   >
                     <Icon className="h-4 w-4" />
                   </a>
@@ -137,22 +130,20 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Payment Methods */}
-        <div className="mt-12 border-t border-[var(--gold)]/20 pt-8">
+        {/* Bottom Bar */}
+        <div className="mt-12 border-t border-gray-200 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div className="text-center md:text-left">
-              <p className="text-sm text-white/70">
-                © {new Date().getFullYear()} Flëur d&apos;Or. All rights reserved.
-              </p>
-            </div>
+            <p className="text-sm text-gray-600">
+              © {new Date().getFullYear()} SS Tech. All rights reserved.
+            </p>
             
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <span className="text-xs text-white/50">We Accept:</span>
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-gray-500">We Accept:</span>
               <div className="flex gap-2">
-                {["Visa", "Mastercard", "PayPal", "Apple Pay"].map((method) => (
+                {["Visa", "Mastercard", "PayPal"].map((method) => (
                   <div
                     key={method}
-                    className="flex h-8 items-center rounded border border-[var(--gold)]/30 bg-black/50 px-3 text-xs font-medium text-white/70"
+                    className="flex h-8 items-center rounded border border-gray-300 bg-white px-3 text-xs font-medium text-gray-700"
                   >
                     {method}
                   </div>
