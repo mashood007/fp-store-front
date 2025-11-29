@@ -1,5 +1,6 @@
 import { getProducts } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
+import MobileProductGrid from "@/components/MobileProductGrid";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
 
@@ -31,13 +32,18 @@ export default async function ProductsPage({
                 ? `Search Results for "${searchParams.search}"`
                 : "All Products"}
           </h1>
-          <p className="text-white/70">
-            {pagination.total} {pagination.total === 1 ? "product" : "products"} found
-          </p>
         </div>
 
         <Suspense fallback={<Loading />}>
-          <ProductGrid products={products} />
+          {/* Mobile Grid */}
+          <div className="block md:hidden">
+            <MobileProductGrid products={products} />
+          </div>
+
+          {/* Desktop Grid */}
+          <div className="hidden md:block">
+            <ProductGrid products={products} />
+          </div>
         </Suspense>
 
         {products.length === 0 && (

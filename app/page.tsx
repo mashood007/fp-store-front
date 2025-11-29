@@ -1,5 +1,6 @@
 import { getProducts, getCollections } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
+import MobileProductCarousel from "@/components/MobileProductCarousel";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles, Shield, Truck, Award, Star } from "lucide-react";
@@ -160,7 +161,15 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <ProductGrid products={products} />
+          {/* Mobile Carousel - Shows 2 items per slide */}
+          <div className="block md:hidden">
+            <MobileProductCarousel products={products} />
+          </div>
+
+          {/* Desktop Grid - Shows normal grid layout */}
+          <div className="hidden md:block">
+            <ProductGrid products={products} />
+          </div>
 
           <div className="mt-12 text-center">
             <Link href="/products" className="btn-secondary group">
