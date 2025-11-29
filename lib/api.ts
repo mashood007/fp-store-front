@@ -231,3 +231,34 @@ export async function completePayment(
   return response.json();
 }
 
+// Stripe Checkout API
+export async function createStripeCheckoutSession(
+  orderId: string,
+  billingAddress: {
+    name: string;
+    email?: string;
+    address1: string;
+    address2?: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  },
+  token: string
+): Promise<{ sessionId: string; sessionUrl: string; checkout: any }> {
+  const response = await fetch(`${API_BASE_URL}/checkout/create-session`, {
+    method: "POST",
+    headers: getAuthHeaders(token),
+    body: JSON.stringify({
+      orderId,
+      billingAddress,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || "Failed to create Stripe checkout session");
+  }
+
+  return response.json();
+}

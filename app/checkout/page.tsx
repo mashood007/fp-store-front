@@ -2,7 +2,7 @@
 
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
-import { createOrder, initializeCheckout, completePayment } from "@/lib/api";
+import { createOrder, createStripeCheckoutSession } from "@/lib/api";
 import { formatPriceNumber } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -32,9 +32,6 @@ export default function CheckoutPage() {
     zipCode: "",
     country: "UAE",
     phone: "",
-    cardNumber: "",
-    cardExpiry: "",
-    cardCvv: "",
     billingAddress: "",
     billingAddress2: "",
     billingCity: "",
@@ -96,7 +93,7 @@ export default function CheckoutPage() {
     } else {
       setFormData((prev) => {
         const updatedData = { ...prev, [name]: value };
-        
+
         // Auto-copy shipping to billing if "use same address" is checked
         if (updatedData.useSameAddress && ['address', 'address2', 'city', 'state', 'zipCode', 'country'].includes(name)) {
           let billingField = '';
@@ -106,7 +103,7 @@ export default function CheckoutPage() {
               break;
             case 'address2':
               billingField = 'billingAddress2';
-              break;  
+              break;
             case 'city':
               billingField = 'billingCity';
               break;
@@ -124,7 +121,7 @@ export default function CheckoutPage() {
             (updatedData as any)[billingField] = value;
           }
         }
-        
+
         return updatedData;
       });
     }
@@ -169,7 +166,7 @@ export default function CheckoutPage() {
       const order = await createOrder(orderData, token);
       setOrderId(order.id);
 
-      // Initialize checkout
+      // Create Stripe Checkout Session
       const billingAddress: Address = {
         name: `${formData.firstName} ${formData.lastName}`.trim(),
         email: formData.email,
@@ -181,33 +178,18 @@ export default function CheckoutPage() {
         country: formData.useSameAddress ? formData.country : formData.billingCountry,
       };
 
-      const checkoutResponse = await initializeCheckout({
-        orderId: order.id,
-        paymentMethod: "card",
+      const stripeSession = await createStripeCheckoutSession(
+        order.id,
         billingAddress,
-      }, token);
+        token
+      );
 
-      setCheckoutId(checkoutResponse.checkout.id);
-      setCurrentStep('payment');
-
-      // Simulate payment processing (in real app, this would integrate with payment gateway)
-      setTimeout(async () => {
-        try {
-          await completePayment(checkoutResponse.checkout.id, {
-            paymentReference: `sim_${Date.now()}`,
-            paymentGateway: "simulation",
-            sessionId: checkoutResponse.checkout.sessionId || "",
-          }, token);
-
-          clearCart();
-          router.push(`/checkout/success?order=${order.orderNumber}`);
-        } catch (paymentError) {
-          console.error("Payment failed:", paymentError);
-          setError("Payment failed. Please try again.");
-          setCurrentStep('form');
-          setIsProcessing(false);
-        }
-      }, 3000);
+      // Redirect to Stripe Checkout
+      if (stripeSession.sessionUrl) {
+        window.location.href = stripeSession.sessionUrl;
+      } else {
+        throw new Error("No Stripe checkout URL returned");
+      }
 
     } catch (error) {
       console.error("Checkout error:", error);
@@ -339,20 +321,20 @@ export default function CheckoutPage() {
           Back to Cart
         </Link>
 
-          <div className="mb-8">
-            <h1 className="font-luxury text-4xl font-bold text-white">
-              Checkout
-            </h1>
-            <p className="text-white/70 mt-2">
-              Complete your order as {customer?.name}
-            </p>
-          </div>
+        <div className="mb-8">
+          <h1 className="font-luxury text-4xl font-bold text-white">
+            Checkout
+          </h1>
+          <p className="text-white/70 mt-2">
+            Complete your order as {customer?.name}
+          </p>
+        </div>
 
-          {error && (
-            <div className="mb-6 rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-red-400">
-              {error}
-            </div>
-          )}
+        {error && (
+          <div className="mb-6 rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-red-400">
+            {error}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Checkout Form */}
@@ -535,7 +517,7 @@ export default function CheckoutPage() {
                     Same as shipping address
                   </label>
                 </div>
-                
+
                 {!formData.useSameAddress && (
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mb-6">
                     <div className="md:col-span-2">
@@ -630,65 +612,6 @@ export default function CheckoutPage() {
                 )}
               </div>
 
-              {/* Payment Information */}
-              <div className="rounded-lg glass p-6 shadow-sm">
-                <h2 className="mb-4 text-xl font-semibold text-white">
-                  Payment Information
-                </h2>
-                <div className="space-y-4">
-                  <div>
-                    <label htmlFor="cardNumber" className="mb-1 block text-sm font-medium text-white/70">
-                      Card Number
-                    </label>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        id="cardNumber"
-                        name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={handleInputChange}
-                        placeholder="1234 5678 9012 3456"
-                        required
-                        className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 pr-12 text-white placeholder:text-white/30 focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
-                      />
-                      <CreditCard className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/40" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="cardExpiry" className="mb-1 block text-sm font-medium text-white/70">
-                        Expiry Date
-                      </label>
-                      <input
-                        type="text"
-                        id="cardExpiry"
-                        name="cardExpiry"
-                        value={formData.cardExpiry}
-                        onChange={handleInputChange}
-                        placeholder="MM/YY"
-                        required
-                        className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white placeholder:text-white/30 focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="cardCvv" className="mb-1 block text-sm font-medium text-white/70">
-                        CVV
-                      </label>
-                      <input
-                        type="text"
-                        id="cardCvv"
-                        name="cardCvv"
-                        value={formData.cardCvv}
-                        onChange={handleInputChange}
-                        placeholder="123"
-                        required
-                        className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white placeholder:text-white/30 focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <button
                 type="submit"
                 disabled={isProcessing}
@@ -699,7 +622,7 @@ export default function CheckoutPage() {
                 ) : (
                   <>
                     <span>Pay</span>
-                    <Price 
+                    <Price
                       amount={getCartTotal()}
                       className="font-semibold"
                       symbolClassName="text-black"
@@ -739,7 +662,7 @@ export default function CheckoutPage() {
                           <div className="flex items-center gap-2 text-sm text-white/60">
                             <span>Qty: {item.quantity}</span>
                             <span>•</span>
-                            <Price 
+                            <Price
                               amount={item.product.price}
                               className="text-white/70"
                               symbolClassName="text-white/70"
@@ -749,7 +672,7 @@ export default function CheckoutPage() {
                           </div>
                         </div>
                         <div className="flex-shrink-0">
-                          <Price 
+                          <Price
                             amount={item.product.price * item.quantity}
                             className="font-semibold text-white"
                             symbolClassName="text-white"
@@ -766,7 +689,7 @@ export default function CheckoutPage() {
                   {/* Subtotal */}
                   <div className="flex justify-between items-center py-2">
                     <span className="text-white/80 font-medium">Subtotal</span>
-                    <Price 
+                    <Price
                       amount={getCartTotal()}
                       className="font-semibold text-white text-lg"
                       symbolClassName="text-white"
@@ -783,8 +706,8 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                     <span className="font-semibold text-[var(--gold)] text-lg">
-                      {new Intl.NumberFormat('en-AE', { 
-                        style: 'currency', 
+                      {new Intl.NumberFormat('en-AE', {
+                        style: 'currency',
                         currency: 'AED',
                         minimumFractionDigits: 0,
                         maximumFractionDigits: 0
@@ -795,7 +718,7 @@ export default function CheckoutPage() {
                   {/* Tax */}
                   <div className="flex justify-between items-center py-2">
                     <span className="text-white/80 font-medium">Tax (VAT)</span>
-                    <Price 
+                    <Price
                       amount={0}
                       className="font-semibold text-white/70 text-lg"
                       symbolClassName="text-white/70"
@@ -809,7 +732,7 @@ export default function CheckoutPage() {
                   {/* Total */}
                   <div className="flex justify-between items-center py-3 bg-[var(--gold)]/10 rounded-lg px-4">
                     <span className="font-luxury text-xl font-bold text-white">Total</span>
-                    <Price 
+                    <Price
                       amount={getCartTotal()}
                       className="font-luxury text-2xl font-bold text-[var(--gold)]"
                       symbolClassName="text-[var(--gold)]"

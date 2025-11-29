@@ -100,7 +100,7 @@ export default function CartPage() {
                           </p>
                         )}
                         <div className="mt-2">
-                          <Price 
+                          <Price
                             amount={item.product.price}
                             className="text-xl font-bold text-[var(--gold)]"
                             symbolClassName="text-[var(--gold)]"
@@ -109,26 +109,26 @@ export default function CartPage() {
                         </div>
                       </div>
 
-                      <div className="mt-4 flex items-center justify-between">
+                      <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         {/* Quantity Controls */}
-                        <div className="flex items-center rounded-xl border-2 border-[var(--gold)]/30 glass shadow-sm">
+                        <div className="flex items-center self-start rounded-xl border-2 border-[var(--gold)]/30 glass shadow-sm">
                           <button
                             onClick={() =>
                               updateQuantity(item.product.id, item.quantity - 1)
                             }
-                            className="p-3 text-white/70 transition-colors hover:text-[var(--gold)]"
+                            className="p-2 text-white/70 transition-colors hover:text-[var(--gold)] sm:p-3"
                             aria-label="Decrease quantity"
                           >
                             <Minus className="h-4 w-4" />
                           </button>
-                          <span className="min-w-[60px] px-4 py-3 text-center font-semibold text-white">
+                          <span className="min-w-[40px] px-2 py-2 text-center font-semibold text-white sm:min-w-[60px] sm:px-4 sm:py-3">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() =>
                               updateQuantity(item.product.id, item.quantity + 1)
                             }
-                            className="p-3 text-white/70 transition-colors hover:text-[var(--gold)]"
+                            className="p-2 text-white/70 transition-colors hover:text-[var(--gold)] sm:p-3"
                             aria-label="Increase quantity"
                           >
                             <Plus className="h-4 w-4" />
@@ -136,10 +136,10 @@ export default function CartPage() {
                         </div>
 
                         {/* Subtotal and Remove */}
-                        <div className="flex items-center gap-4">
-                          <div className="text-right">
+                        <div className="flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-end">
+                          <div className="text-left sm:text-right">
                             <p className="text-xs text-white/50">Subtotal</p>
-                            <Price 
+                            <Price
                               amount={item.product.price * item.quantity}
                               className="text-xl font-bold text-white"
                               symbolClassName="text-white"
@@ -174,7 +174,7 @@ export default function CartPage() {
                 <div className="space-y-4">
                   <div className="flex justify-between text-white/70">
                     <span>Subtotal ({items.length} items)</span>
-                    <Price 
+                    <Price
                       amount={getCartTotal()}
                       className="font-semibold text-white"
                       symbolClassName="text-white"
@@ -193,7 +193,7 @@ export default function CartPage() {
                   <div className="border-t-2 border-[var(--gold)]/20 pt-4">
                     <div className="flex justify-between">
                       <span className="text-lg font-semibold text-white">Total</span>
-                      <Price 
+                      <Price
                         amount={getCartTotal()}
                         className="text-2xl font-bold text-[var(--gold)]"
                         symbolClassName="text-[var(--gold)]"
