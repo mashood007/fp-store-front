@@ -20,24 +20,6 @@ const categories = [
     description: "Versatile scents for everyone",
     count: "30+ Products",
   },
-  {
-    name: "Luxury Collection",
-    slug: "luxury",
-    description: "Premium and exclusive fragrances",
-    count: "25+ Products",
-  },
-  {
-    name: "Fresh & Citrus",
-    slug: "fresh",
-    description: "Light and refreshing scents",
-    count: "40+ Products",
-  },
-  {
-    name: "Woody & Spicy",
-    slug: "woody",
-    description: "Warm and earthy fragrances",
-    count: "35+ Products",
-  },
 ];
 
 export default function CategoriesPage() {

@@ -1,4 +1,4 @@
-import { getProducts } from "@/lib/api";
+import { getProducts, getCollections } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import { ArrowRight, Sparkles, Shield, Truck, Award, Star } from "lucide-react";
 
 export default async function HomePage() {
   const { products } = await getProducts({ limit: 8 });
+  const { collections } = await getCollections({ limit: 6 });
 
   return (
     <div className="min-h-screen">
@@ -19,17 +20,17 @@ export default async function HomePage() {
                 <Sparkles className="h-4 w-4 text-[var(--gold)]" />
                 <span className="text-sm font-medium text-[var(--gold)]">Luxury Fragrance Collection</span>
               </div>
-              
+
               <h1 className="mb-6 font-luxury text-5xl font-bold leading-tight text-white md:text-6xl lg:text-7xl">
                 Elevate Your Spirit with
                 <span className="block gradient-text">Victory Scented Fragrances</span>
               </h1>
-              
+
               <p className="mb-8 text-lg leading-relaxed text-white/70 md:text-xl">
                 Shop now and embrace the sweet smell of victory with Flëur d&apos;Or.
                 Discover our curated collection of premium perfumes from around the world.
               </p>
-              
+
               <div className="flex flex-col gap-4 sm:flex-row justify-center lg:justify-start">
                 <Link href="/products" className="btn-primary group">
                   Shop Now
@@ -88,8 +89,64 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* collections */}
+      {collections.length > 0 && (
+        <section className="section-padding bg-gradient-to-b from-black to-[#0a0a0a]">
+          <div className="container mx-auto px-4">
+            <div className="mb-12 text-center">
+              <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wider text-[var(--gold)]">
+                Curated Collections
+              </span>
+              <h2 className="mb-4 font-luxury text-4xl font-bold text-white md:text-5xl">
+                Explore Our Collections
+              </h2>
+              <p className="mx-auto max-w-2xl text-lg text-white/70">
+                Discover carefully curated fragrance collections for every occasion
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {collections.map((collection) => (
+                <Link
+                  key={collection.id}
+                  href={`/products?collection=${collection.id}`}
+                  className="group relative overflow-hidden rounded-2xl glass shadow-soft transition-all hover:shadow-luxury hover:-translate-y-1"
+                >
+                  {collection.imageUrl && (
+                    <div className="relative h-64 w-full overflow-hidden">
+                      <Image
+                        src={collection.imageUrl}
+                        alt={collection.name}
+                        fill
+                        className="object-cover transition-transform group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                    </div>
+                  )}
+
+                  <div className={`relative z-10 p-6 ${!collection.imageUrl ? 'min-h-[200px] flex flex-col justify-center' : 'absolute bottom-0 left-0 right-0'}`}>
+                    <h3 className="mb-2 font-luxury text-2xl font-bold text-white transition-colors group-hover:text-[var(--gold)]">
+                      {collection.name}
+                    </h3>
+                    {collection.description && (
+                      <p className="mb-4 text-white/70 line-clamp-2">
+                        {collection.description}
+                      </p>
+                    )}
+                    <span className="inline-flex items-center gap-2 text-[var(--gold)] font-medium">
+                      View Collection
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Featured Products */}
-      <section className="section-padding bg-gradient-to-b from-black to-[#0a0a0a]">
+      <section className="section-padding bg-gradient-to-b from-[#0a0a0a] to-black">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wider text-[var(--gold)]">
@@ -153,7 +210,7 @@ export default async function HomePage() {
                 className="group relative overflow-hidden rounded-2xl glass p-8 shadow-soft transition-all hover:shadow-luxury hover:-translate-y-1"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 transition-opacity group-hover:opacity-100`}></div>
-                
+
                 <div className="relative z-10">
                   <h3 className="mb-2 font-luxury text-2xl font-bold text-white transition-colors group-hover:text-[var(--gold)]">
                     {category.title}
@@ -235,7 +292,7 @@ export default async function HomePage() {
             <p className="mb-8 text-lg text-white/70">
               Subscribe to get special offers, free giveaways, and exclusive deals.
             </p>
-            
+
             <form className="mx-auto flex max-w-md flex-col gap-3 sm:flex-row">
               <input
                 type="email"

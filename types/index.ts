@@ -30,6 +30,26 @@ export interface ProductsResponse {
   };
 }
 
+export interface Collection {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  imageUrl: string | null;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CollectionsResponse {
+  collections: Collection[];
+  pagination: {
+    total: number;
+    limit: number;
+    offset: number;
+  };
+}
+
 export interface CartItem {
   product: Product;
   quantity: number;
@@ -83,21 +103,21 @@ export interface Address {
 }
 
 // Order Types
-export type OrderStatus = 
-  | "PENDING" 
-  | "CONFIRMED" 
-  | "PROCESSING" 
-  | "SHIPPED" 
-  | "DELIVERED" 
-  | "CANCELLED" 
+export type OrderStatus =
+  | "PENDING"
+  | "CONFIRMED"
+  | "PROCESSING"
+  | "SHIPPED"
+  | "DELIVERED"
+  | "CANCELLED"
   | "REFUNDED";
 
-export type PaymentStatus = 
-  | "PENDING" 
-  | "PROCESSING" 
-  | "COMPLETED" 
-  | "FAILED" 
-  | "CANCELLED" 
+export type PaymentStatus =
+  | "PENDING"
+  | "PROCESSING"
+  | "COMPLETED"
+  | "FAILED"
+  | "CANCELLED"
   | "REFUNDED";
 
 export interface OrderProduct {

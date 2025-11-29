@@ -7,16 +7,18 @@ export async function getProducts(params?: {
   search?: string;
   limit?: number;
   offset?: number;
+  collection?: string;
 }): Promise<ProductsResponse> {
   const searchParams = new URLSearchParams();
-  
+
   if (params?.category) searchParams.append("category", params.category);
   if (params?.search) searchParams.append("search", params.search);
   if (params?.limit) searchParams.append("limit", params.limit.toString());
   if (params?.offset) searchParams.append("offset", params.offset.toString());
+  if (params?.collection) searchParams.append("collection", params.collection);
 
   const url = `${API_BASE_URL}/products${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
-  
+
   const response = await fetch(url, {
     next: { revalidate: 60 }, // Revalidate every 60 seconds
   });
@@ -44,14 +46,39 @@ export async function searchProducts(query: string): Promise<ProductsResponse> {
   return getProducts({ search: query });
 }
 
+// Collections API
+import { Collection, CollectionsResponse } from "@/types";
+
+export async function getCollections(params?: {
+  limit?: number;
+  offset?: number;
+}): Promise<CollectionsResponse> {
+  const searchParams = new URLSearchParams();
+
+  if (params?.limit) searchParams.append("limit", params.limit.toString());
+  if (params?.offset) searchParams.append("offset", params.offset.toString());
+
+  const url = `${API_BASE_URL}/collections${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+
+  const response = await fetch(url, {
+    next: { revalidate: 60 }, // Revalidate every 60 seconds
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch collections");
+  }
+
+  return response.json();
+}
+
 // Order and Customer APIs
-import { 
-  Order, 
-  OrdersResponse, 
-  CreateOrderRequest, 
-  CheckoutRequest, 
+import {
+  Order,
+  OrdersResponse,
+  CreateOrderRequest,
+  CheckoutRequest,
   CheckoutResponse,
-  CustomerUser 
+  CustomerUser
 } from "@/types";
 
 // Helper function to get auth headers
@@ -108,13 +135,13 @@ export async function getOrders(
   }
 ): Promise<OrdersResponse> {
   const searchParams = new URLSearchParams();
-  
+
   if (params?.limit) searchParams.append("limit", params.limit.toString());
   if (params?.offset) searchParams.append("offset", params.offset.toString());
   if (params?.status) searchParams.append("status", params.status);
 
   const url = `${API_BASE_URL}/orders${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
-  
+
   const response = await fetch(url, {
     headers: getAuthHeaders(token),
   });

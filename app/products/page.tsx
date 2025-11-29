@@ -5,6 +5,7 @@ import Loading from "@/components/Loading";
 
 interface SearchParams {
   category?: string;
+  collection?: string;
   search?: string;
 }
 
@@ -15,6 +16,7 @@ export default async function ProductsPage({
 }) {
   const { products, pagination } = await getProducts({
     category: searchParams.category,
+    collection: searchParams.collection,
     search: searchParams.search,
   });
 
@@ -26,8 +28,8 @@ export default async function ProductsPage({
             {searchParams.category
               ? `${searchParams.category.charAt(0).toUpperCase() + searchParams.category.slice(1)} Fragrances`
               : searchParams.search
-              ? `Search Results for "${searchParams.search}"`
-              : "All Products"}
+                ? `Search Results for "${searchParams.search}"`
+                : "All Products"}
           </h1>
           <p className="text-white/70">
             {pagination.total} {pagination.total === 1 ? "product" : "products"} found
