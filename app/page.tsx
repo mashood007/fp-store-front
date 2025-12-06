@@ -1,6 +1,7 @@
 import { getProducts, getCollections } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 import MobileProductCarousel from "@/components/MobileProductCarousel";
+import MobileCollectionCarousel from "@/components/MobileCollectionCarousel";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles, Shield, Truck, Award, Star } from "lucide-react";
@@ -14,9 +15,9 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-luxury">
         <div className="container relative mx-auto px-4 py-20 md:py-32 lg:py-40">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="flex flex-col items-center gap-12">
             {/* Hero Content */}
-            <div className="animate-slide-up text-center lg:text-left">
+            <div className="animate-slide-up text-center max-w-4xl mx-auto">
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-4 py-2 backdrop-blur-sm">
                 <Sparkles className="h-4 w-4 text-[var(--gold)]" />
                 <span className="text-sm font-medium text-[var(--gold)]">Luxury Fragrance Collection</span>
@@ -27,7 +28,7 @@ export default async function HomePage() {
                 <span className="block gradient-text">Victory Scented Fragrances</span>
               </h6>
 
-              <div className="flex flex-col gap-4 sm:flex-row justify-center lg:justify-start">
+              <div className="flex flex-col gap-4 sm:flex-row justify-center">
                 <Link href="/products" className="btn-primary group text-[var(--gold)]">
                   Shop Now
                 </Link>
@@ -37,7 +38,7 @@ export default async function HomePage() {
               </div>
 
               {/* Trust Indicators */}
-              <div className="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-white/60">
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
                 <div className="flex items-center gap-2">
                   <Award className="h-5 w-5 text-[var(--gold)]" />
                   <span className="font-medium">100% Authentic</span>
@@ -46,15 +47,15 @@ export default async function HomePage() {
             </div>
 
             {/* Hero Image/Visual */}
-            <div className="relative hidden lg:block">
+            <div className="relative w-full max-w-5xl mx-auto mt-8">
               <div className="relative flex items-center justify-center">
-                <Image
-                  src="/bottle.png"
-                  alt="Luxury Perfume Bottle"
-                  width={500}
-                  height={500}
-                  className="object-contain"
-                  priority
+                <video
+                  src="/animations/landing-page.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-auto"
                 />
               </div>
             </div>
@@ -70,15 +71,21 @@ export default async function HomePage() {
               <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wider text-[var(--gold)]">
                 Curated Collections
               </span>
-              <h2 className="mb-4 font-luxury text-4xl font-bold text-white md:text-5xl">
+              <h2 className="mb-4 font-luxury text-md-4xl font-bold text-white md:text-5xl">
                 Explore Our Collections
               </h2>
-              <p className="mx-auto max-w-2xl text-lg text-white/70">
+              <p className="mx-auto max-w-2xl text-md-lg text-white/70">
                 Discover carefully curated fragrance collections for every occasion
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Mobile Carousel - Shows 2 items per slide */}
+            <div className="block md:hidden">
+              <MobileCollectionCarousel collections={collections} />
+            </div>
+
+            {/* Desktop Grid - Shows normal grid layout */}
+            <div className="hidden md:grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {collections.map((collection) => (
                 <Link
                   key={collection.id}
@@ -146,14 +153,13 @@ export default async function HomePage() {
           <div className="mt-12 text-center">
             <Link href="/products" className="btn-secondary group">
               View All Products
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* Categories */}
-      <section className="section-padding bg-black">
+      <section className="section-padding bg-black mt-12">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wider text-[var(--gold)]">

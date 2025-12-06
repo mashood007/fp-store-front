@@ -52,7 +52,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-[var(--gold)]/20 bg-black/95 backdrop-blur-lg shadow-luxury">
       {/* Top Banner */}
       <div className="bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] py-2 text-center text-xs text-black font-medium md:text-sm">
-        <p>Free Shipping on Orders Over AED 180 | 30-Day Returns</p>
+        <p>Free Shipping on Orders Over AED 250</p>
       </div>
 
       <div className="container mx-auto px-4 md:px-6">
@@ -62,7 +62,7 @@ export default function Header() {
             href="/"
             className="group flex items-center gap-3 transition-all hover:opacity-80 shrink-0"
           >
-            <div className="relative h-12 w-12 md:h-14 md:w-14">
+            <div className="relative h-14 w-14 md:h-16 md:w-16">
               <Image
                 src="/logos/logo1.png"
                 alt="Flëur d'Or"
