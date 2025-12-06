@@ -6,12 +6,12 @@ import { AuthProvider } from "@/context/AuthContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
 });
@@ -19,6 +19,9 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Flëur d'Or - Luxury Perfume Boutique",
   description: "Discover the finest collection of luxury perfumes and fragrances. Experience elegance and sophistication with Flëur d'Or.",
+  icons: {
+    icon: "/logos/logo1.png",
+  },
 };
 
 export default function RootLayout({
