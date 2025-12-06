@@ -5,14 +5,14 @@
 
 @layer base {
   :root {
-    --gold-darker: #8a6f5f;
-    --accent: #8a6f5f;
+    --gold-darker: #A68503;
+    --accent: #C9A003;
     --background: #000000;
     --foreground: #ffffff;
 
-    --gold: #bd8c55;
-    --gold-dark: #d97706;
-    --gold-light: #b96b44;
+    --gold: #EFBF04;
+    --gold-dark: #b19662;
+    --gold-light: #F4D03F;
   }
 
   html {
@@ -62,7 +62,7 @@
   }
 
   ::-webkit-scrollbar-track {
-  background: #111;
+    background: #111;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -71,10 +71,10 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-dark);
+    background: var(--gold-dark);
   }
 
-/* Selection styling */
+  /* Selection styling */
   ::selection {
     background: var(--gold);
     color: black;
@@ -89,7 +89,7 @@
   .focus-ring {
     outline: none;
   }
-  
+
   .focus-ring:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(191, 160, 148, 0.5);
@@ -102,6 +102,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -113,6 +114,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -123,6 +125,7 @@
   from {
     width: 0%;
   }
+
   to {
     width: 100%;
   }
@@ -150,6 +153,7 @@
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

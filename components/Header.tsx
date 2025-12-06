@@ -17,7 +17,7 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const cartCount = getCartCount();
-  
+
   const accountDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
@@ -56,27 +56,24 @@ export default function Header() {
       </div>
 
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex h-16 items-center justify-between md:h-20">
+        <div className="flex h-16 items-center justify-between gap-6 md:h-20">
           {/* Logo */}
           <Link
             href="/"
-            className="group flex items-center gap-3 transition-all hover:opacity-80"
+            className="group flex items-center gap-3 transition-all hover:opacity-80 shrink-0"
           >
-            <div className="relative h-10 w-10 md:h-12 md:w-12">
+            <div className="relative h-12 w-12 md:h-14 md:w-14">
               <Image
-                src="/logos/logo2.png"
+                src="/logos/logo1.png"
                 alt="Flëur d'Or"
                 fill
                 className="object-contain transition-transform group-hover:scale-110"
               />
             </div>
-            <span className="hidden font-luxury text-2xl font-bold text-[var(--gold)] md:inline">
-              Flëur d&apos;Or
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          <nav className="hidden lg:flex items-center space-x-2">
             {[
               { href: "/", label: "Home" },
               { href: "/products", label: "Shop" },
@@ -86,11 +83,10 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive(item.href)
-                    ? "text-[var(--gold)]"
-                    : "text-white/80 hover:text-[var(--gold)]"
-                }`}
+                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${isActive(item.href)
+                  ? "text-[var(--gold)]"
+                  : "text-white/80 hover:text-[var(--gold)]"
+                  }`}
               >
                 {item.label}
                 {isActive(item.href) && (
@@ -101,7 +97,7 @@ export default function Header() {
           </nav>
 
           {/* Desktop Search & Actions */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
             {/* Search Bar */}
             <form onSubmit={handleSearch} className="relative">
               <input
@@ -258,11 +254,10 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block rounded-lg px-4 py-3 text-base font-medium transition-all ${
-                    isActive(item.href)
-                      ? "bg-[var(--gold)]/20 text-[var(--gold)]"
-                      : "text-white/80 hover:bg-black/50 hover:text-[var(--gold)]"
-                  }`}
+                  className={`block rounded-lg px-4 py-3 text-base font-medium transition-all ${isActive(item.href)
+                    ? "bg-[var(--gold)]/20 text-[var(--gold)]"
+                    : "text-white/80 hover:bg-black/50 hover:text-[var(--gold)]"
+                    }`}
                 >
                   {item.label}
                 </Link>
