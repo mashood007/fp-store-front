@@ -40,7 +40,7 @@ export default function OrdersPage() {
   useEffect(() => {
     const loadOrders = async () => {
       if (!token) return;
-      
+
       try {
         setIsLoadingOrders(true);
         const response = await getOrders(token);
@@ -185,7 +185,7 @@ export default function OrdersPage() {
                             {statusConfig[order.status].label}
                           </div>
                           <div className="mt-1">
-                            <Price 
+                            <Price
                               amount={order.totalAmount}
                               className="text-lg font-semibold text-[var(--gold)]"
                               symbolClassName="text-[var(--gold)]"
@@ -226,7 +226,7 @@ export default function OrdersPage() {
                           <div className="relative h-12 w-12 rounded-lg overflow-hidden bg-black/50">
                             {item.product.images[0] && (
                               <Image
-                                src={`http://localhost:3000${item.product.images[0].url}`}
+                                src={`${item.product.images[0].url}`}
                                 alt={item.productName}
                                 fill
                                 className="object-cover"
@@ -241,7 +241,7 @@ export default function OrdersPage() {
                               Qty: {item.quantity} × <Price amount={item.unitPrice} className="text-white/60" symbolSize={12} />
                             </p>
                           </div>
-                          <Price 
+                          <Price
                             amount={item.subtotal}
                             className="text-sm font-medium text-white"
                             symbolSize={14}
@@ -337,7 +337,7 @@ export default function OrdersPage() {
                             <div className="relative h-16 w-16 rounded-lg overflow-hidden bg-white/10">
                               {item.product.images[0] && (
                                 <Image
-                                  src={`http://localhost:3000${item.product.images[0].url}`}
+                                  src={`${item.product.images[0].url}`}
                                   alt={item.productName}
                                   fill
                                   className="object-cover"
@@ -354,7 +354,7 @@ export default function OrdersPage() {
                               </p>
                             </div>
                             <div className="text-right">
-                              <Price 
+                              <Price
                                 amount={item.subtotal}
                                 className="font-semibold text-white"
                                 symbolSize={16}
@@ -392,7 +392,7 @@ export default function OrdersPage() {
                         <div className="border-t border-[var(--gold)]/20 pt-3">
                           <div className="flex justify-between text-lg font-semibold">
                             <span className="text-white">Total</span>
-                            <Price 
+                            <Price
                               amount={selectedOrder.totalAmount}
                               className="text-[var(--gold)]"
                               symbolClassName="text-[var(--gold)]"

@@ -262,3 +262,29 @@ export async function createStripeCheckoutSession(
 
   return response.json();
 }
+
+// Coupon API
+import { CouponVerificationResponse } from "@/types";
+
+export async function verifyCoupon(
+  code: string,
+  orderAmount: number
+): Promise<CouponVerificationResponse> {
+  const response = await fetch(`${API_BASE_URL}/coupons/verify`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ code, orderAmount }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    return {
+      valid: false,
+      error: error.error || "Failed to verify coupon",
+    };
+  }
+
+  return response.json();
+}

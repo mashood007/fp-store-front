@@ -181,6 +181,7 @@ export interface CreateOrderRequest {
   }>;
   shippingAddress: Address;
   notes?: string;
+  couponCode?: string;
 }
 
 // Checkout Types
@@ -219,5 +220,15 @@ export interface CheckoutResponse {
   message: string;
   checkout: Checkout;
   paymentUrl?: string;
+}
+
+// Coupon Types
+export interface CouponVerificationResponse {
+  valid: boolean;
+  code?: string;
+  description?: string;
+  discountPercent?: number;
+  discount?: number;
+  error?: string;
 }
 
