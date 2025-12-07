@@ -13,50 +13,47 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-luxury">
-        <div className="container relative mx-auto px-4 py-20 md:py-32 lg:py-40">
-          <div className="flex flex-col items-center gap-12">
-            {/* Hero Content */}
-            <div className="animate-slide-up text-center max-w-4xl mx-auto">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-4 py-2 backdrop-blur-sm">
-                <Sparkles className="h-4 w-4 text-[var(--gold)]" />
-                <span className="text-sm font-medium text-[var(--gold)]">Luxury Fragrance Collection</span>
-              </div>
+      {/* Hero Section */}
+      <section className="relative h-screen w-full overflow-hidden">
+        {/* Background Video */}
+        <div className="absolute inset-0 z-0">
+          <video
+            src="/animations/video.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
 
-              <h6 className="mb-6 font-luxury text-xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
-                Elevate Your Spirit with
-                <span className="block gradient-text">Victory Scented Fragrances</span>
-              </h6>
-
-              <div className="flex flex-col gap-4 sm:flex-row justify-center">
-                <Link href="/products" className="btn-primary group text-[var(--gold)]">
-                  Shop Now
-                </Link>
-                <Link href="/about" className="btn-secondary">
-                  Learn More
-                </Link>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-white/60">
-                <div className="flex items-center gap-2">
-                  <Award className="h-5 w-5 text-[var(--gold)]" />
-                  <span className="font-medium">100% Authentic</span>
-                </div>
-              </div>
+        <div className="container relative z-10 mx-auto flex h-full flex-col items-center justify-center px-4 text-center">
+          <div className="animate-slide-up max-w-4xl mx-auto">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--gold)]/30 bg-[var(--gold)]/10 px-4 py-2 backdrop-blur-sm">
+              <Sparkles className="h-4 w-4 text-[var(--gold)]" />
+              <span className="text-sm font-medium text-[var(--gold)]">Luxury Fragrance Collection</span>
             </div>
 
-            {/* Hero Image/Visual */}
-            <div className="relative w-full max-w-5xl mx-auto mt-8">
-              <div className="relative flex items-center justify-center">
-                <video
-                  src="/animations/landing-page.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-auto"
-                />
+            <h6 className="mb-6 font-luxury text-xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
+              Elevate Your Spirit with
+              <span className="block gradient-text">Victory Scented Fragrances</span>
+            </h6>
+
+            <div className="flex flex-col gap-4 sm:flex-row justify-center">
+              <Link href="/products" className="btn-primary group text-[var(--gold)]">
+                Shop Now
+              </Link>
+              <Link href="/about" className="btn-secondary">
+                Learn More
+              </Link>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-6 text-sm text-white/80">
+              <div className="flex items-center gap-2">
+                <Award className="h-5 w-5 text-[var(--gold)]" />
+                <span className="font-medium">100% Authentic</span>
               </div>
             </div>
           </div>
@@ -65,7 +62,7 @@ export default async function HomePage() {
 
       {/* collections */}
       {collections.length > 0 && (
-        <section className="section-padding bg-gradient-to-b from-black to-[#0a0a0a]">
+        <section className="mt-2 section-padding bg-gradient-to-b from-black to-[#0a0a0a]">
           <div className="container mx-auto px-4">
             <div className="mb-12 text-center">
               <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wider text-[var(--gold)]">
@@ -126,7 +123,7 @@ export default async function HomePage() {
       )}
 
       {/* Featured Products */}
-      <section className="section-padding bg-gradient-to-b from-[#0a0a0a] to-black">
+      <section className="section-padding bg-gradient-to-b from-[#0a0a0a] to-black mt-12 md:mt-0">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
             <span className="mb-3 inline-block text-sm font-semibold uppercase tracking-wider text-[var(--gold)]">
