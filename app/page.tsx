@@ -13,18 +13,20 @@ export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      {/* Hero Section */}
       <section className="relative h-screen w-full overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 z-0">
           <video
-            src="/animations/video.mp4"
             autoPlay
             loop
             muted
             playsInline
+            preload="auto"
             className="h-full w-full object-cover"
-          />
+            poster="/bottle.png"
+          >
+            <source src="/animations/video.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-black/40" />
         </div>
 
