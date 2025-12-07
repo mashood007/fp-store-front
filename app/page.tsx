@@ -2,6 +2,7 @@ import { getProducts, getCollections } from "@/lib/api";
 import ProductGrid from "@/components/ProductGrid";
 import MobileProductCarousel from "@/components/MobileProductCarousel";
 import MobileCollectionCarousel from "@/components/MobileCollectionCarousel";
+import HeroVideo from "@/components/HeroVideo";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Sparkles, Shield, Truck, Award, Star } from "lucide-react";
@@ -10,23 +11,14 @@ export default async function HomePage() {
   const { products } = await getProducts({ limit: 8 });
   const { collections } = await getCollections({ limit: 6 });
 
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen w-full overflow-hidden">
         {/* Background Video */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="h-full w-full object-cover"
-            poster="/bottle.png"
-          >
-            <source src="/animations/video.mp4" type="video/mp4" />
-          </video>
+          <HeroVideo />
           <div className="absolute inset-0 bg-black/40" />
         </div>
 
