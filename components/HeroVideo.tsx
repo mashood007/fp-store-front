@@ -36,8 +36,11 @@ export default function HeroVideo() {
             webkit-playsinline="true"
             preload="metadata"
         >
-            <source src="https://kvrayugaswnnzrlb.public.blob.vercel-storage.com/hero_1080.mp4" type="video/mp4" media="(max-width: 768px)" />
-            <source src="https://kvrayugaswnnzrlb.public.blob.vercel-storage.com/hero.mp4" type="video/mp4" media="(min-width: 769px)" />
+            {/* <source src="https://kvrayugaswnnzrlb.public.blob.vercel-storage.com/hero_1080.mp4" type="video/mp4" media="(max-width: 768px)" /> */}
+            {/* <source src="https://kvrayugaswnnzrlb.public.blob.vercel-storage.com/hero.mp4" type="video/mp4" media="(min-width: 769px)" /> */}
+            {/* https://kvrayugaswnnzrlb.public.blob.vercel-storage.com/hero_low.mp4 */}
+            <source src="https://kvrayugaswnnzrlb.public.blob.vercel-storage.com/hero_low.mp4" type="video/mp4" />
+
         </video>
     );
 }
