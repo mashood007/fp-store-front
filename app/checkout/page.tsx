@@ -181,11 +181,12 @@ export default function CheckoutPage() {
     setCouponError("");
   };
 
-  // Calculate total with coupon discount
+  // Calculate total with coupon discount and VAT
   const calculateTotal = () => {
     const subtotal = getCartTotal();
     const discount = appliedCoupon?.discount || 0;
-    return subtotal - discount;
+    const vat = subtotal * 0.05;
+    return subtotal + vat - discount;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -838,9 +839,9 @@ export default function CheckoutPage() {
 
                   {/* Tax */}
                   <div className="flex justify-between items-center py-2">
-                    <span className="text-white/80 font-medium">Tax (VAT)</span>
+                    <span className="text-white/80 font-medium">Tax (VAT 5%)</span>
                     <Price
-                      amount={0}
+                      amount={getCartTotal() * 0.05}
                       className="font-semibold text-white/70 text-lg"
                       symbolClassName="text-white/70"
                       symbolSize={18}
