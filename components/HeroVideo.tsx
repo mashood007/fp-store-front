@@ -8,7 +8,7 @@ export default function HeroVideo() {
                 muted
                 className="absolute inset-0 h-full w-full object-cover"
                 preload="metadata"
-                poster="/bottle.png"
+                poster="/images/poster.jpg"
             >
                 <source src="https://kvrayugaswnnzrlb.public.blob.vercel-storage.com/hero_1080.mp4" type="video/mp4" />
             </video>

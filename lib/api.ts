@@ -20,7 +20,7 @@ export async function getProducts(params?: {
   const url = `${API_BASE_URL}/products${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
 
   const response = await fetch(url, {
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
+    cache: "no-store",
   });
 
   if (!response.ok) {
