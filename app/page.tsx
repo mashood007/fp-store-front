@@ -31,7 +31,7 @@ export default async function HomePage() {
 
             <h6 className="mb-6 font-luxury text-xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
               Elevate Your Spirit with
-              <span className="block gradient-text">Fleur D'or Perfumes</span>
+              <span className="block gradient-text">Fleur D&apos;or Perfumes</span>
             </h6>
 
             <div className="flex flex-col gap-4 sm:flex-row justify-center">
