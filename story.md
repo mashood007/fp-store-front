@@ -1,0 +1,10 @@
+Every great brand begins with a moment of inspiration. For Azizia International, that defining moment came from the heart of its founder and CEO guided by an enduring love for fragrances and the unforgettable memories they evoke.
+After 18 years of professional experience with Gulf International LLC, one of the UAE's leading companies, Mohammed Anshid Moosapy was inspired to pursue a path beyond the ordinary, driven by a profound passion to create something uniquely his own.
+From a young age, he believed that every scent tells a story. A single fragrance can carry emotions, moments and memories that stay with us forever. Guided by this belief, he took a courageous step, leaving behind the familiar to pursue a vision that had been growing quietly within him.
+A year before launching his company, he immersed himself in the world of perfumery, studying fragrance notes, understanding industry craftsmanship and exploring how luxury scents are brought to life. This deep curiosity soon transformed into purpose.
+In honour of the two people who shaped his life, he founded Azizia International, named lovingly after his parents, P Abdul Azeez and Shuhaiba Moosapy. With a commitment to creating a luxury, quality-driven perfume brand, he launched the brand's first signature line, Fleur D'or in {---date).
+Fleur D'or meaning 'Golden Flower' in French, embodies the timeless beauty of the orange blossom, a fragrance that awakens joy, stirs nostalgia and celebrates life's most cherished moments.
+Guided by vision, passion and a commitment to excellence, Mohammed Anshid Moosapy continues to lead with purpose, building a brand that reflects both his creativity and his dedication to making a lasting impact.
+
+#####
+Rooted in love, inspired by memories and driven by passion — this is the story of Fleur D'or .

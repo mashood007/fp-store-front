@@ -8,20 +8,33 @@ export default function AboutPage() {
           </h1>
 
           <div className="space-y-8">
-            <section>
+            <section id="story">
               <h2 className="mb-4 font-luxury text-3xl font-bold text-white">
                 Our Story
               </h2>
               <p className="mb-4 text-lg text-white/70 leading-relaxed">
-                Flëur d&apos;Or was founded with a passion for bringing the finest perfumes 
-                and fragrances to discerning customers around the world. We believe that 
-                a signature scent is more than just a fragrance—it&apos;s an expression of 
-                personality, style, and the sweet taste of victory and success.
+                Every great brand begins with a moment of inspiration. For Azizia International, that defining moment came from the heart of its founder and CEO guided by an enduring love for fragrances and the unforgettable memories they evoke.
               </p>
-              <p className="text-lg text-white/70 leading-relaxed">
-                Our carefully curated &quot;Victory Scented&quot; collection embodies the spirit of 
-                triumph and achievement. Each fragrance tells a story of success, elegance, 
-                and sophistication, celebrating your milestones and accomplishments.
+              <p className="mb-4 text-lg text-white/70 leading-relaxed">
+                After 18 years of professional experience with Gulf International LLC, one of the UAE&apos;s leading companies, Mohammed Anshid Moosapy was inspired to pursue a path beyond the ordinary, driven by a profound passion to create something uniquely his own.
+              </p>
+              <p className="mb-4 text-lg text-white/70 leading-relaxed">
+                From a young age, he believed that every scent tells a story. A single fragrance can carry emotions, moments and memories that stay with us forever. Guided by this belief, he took a courageous step, leaving behind the familiar to pursue a vision that had been growing quietly within him.
+              </p>
+              <p className="mb-4 text-lg text-white/70 leading-relaxed">
+                A year before launching his company, he immersed himself in the world of perfumery, studying fragrance notes, understanding industry craftsmanship and exploring how luxury scents are brought to life. This deep curiosity soon transformed into purpose.
+              </p>
+              <p className="mb-4 text-lg text-white/70 leading-relaxed">
+                In honour of the two people who shaped his life, he founded Azizia International, named lovingly after his parents, P Abdul Azeez and Shuhaiba Moosapy. With a commitment to creating a luxury, quality-driven perfume brand, he launched the brand&apos;s first signature line, Fleur D&apos;or in {`{---date}`}.
+              </p>
+              <p className="mb-4 text-lg text-white/70 leading-relaxed">
+                Fleur D&apos;or meaning &apos;Golden Flower&apos; in French, embodies the timeless beauty of the orange blossom, a fragrance that awakens joy, stirs nostalgia and celebrates life&apos;s most cherished moments.
+              </p>
+              <p className="mb-4 text-lg text-white/70 leading-relaxed">
+                Guided by vision, passion and a commitment to excellence, Mohammed Anshid Moosapy continues to lead with purpose, building a brand that reflects both his creativity and his dedication to making a lasting impact.
+              </p>
+              <p className="text-lg text-white/70 leading-relaxed font-semibold italic">
+                &quot;<span className="text-[var(--gold)]">Rooted in love, inspired by memories and driven by passion</span>&quot; — this is the story of Fleur D&apos;or.
               </p>
             </section>
 
@@ -30,9 +43,9 @@ export default function AboutPage() {
                 Our Mission
               </h2>
               <p className="text-lg text-white/70 leading-relaxed">
-                We&apos;re committed to providing an exceptional shopping experience by 
-                offering only authentic, high-quality fragrances that embody victory and 
-                triumph. Our team of fragrance experts is dedicated to helping you discover 
+                We&apos;re committed to providing an exceptional shopping experience by
+                offering only authentic, high-quality fragrances that embody victory and
+                triumph. Our team of fragrance experts is dedicated to helping you discover
                 scents that perfectly match your style and celebrate your achievements.
               </p>
             </section>
@@ -47,7 +60,7 @@ export default function AboutPage() {
                     Authenticity Guaranteed
                   </h3>
                   <p className="text-white/70">
-                    Every perfume in our collection is 100% authentic and sourced 
+                    Every perfume in our collection is 100% authentic and sourced
                     directly from authorized distributors and brands.
                   </p>
                 </div>
@@ -56,7 +69,7 @@ export default function AboutPage() {
                     Expert Curation
                   </h3>
                   <p className="text-white/70">
-                    Our team carefully selects each fragrance to ensure we offer 
+                    Our team carefully selects each fragrance to ensure we offer
                     only the finest scents for our customers.
                   </p>
                 </div>
@@ -65,7 +78,7 @@ export default function AboutPage() {
                     Fast Shipping
                   </h3>
                   <p className="text-white/70">
-                    We offer quick and secure shipping to ensure your perfumes 
+                    We offer quick and secure shipping to ensure your perfumes
                     arrive safely and promptly.
                   </p>
                 </div>
@@ -74,8 +87,7 @@ export default function AboutPage() {
                     Customer Satisfaction
                   </h3>
                   <p className="text-white/70">
-                    Your satisfaction is our priority. We offer easy returns and 
-                    dedicated customer support.
+                    Your satisfaction is our priority.
                   </p>
                 </div>
               </div>

@@ -31,7 +31,7 @@ export default async function HomePage() {
 
             <h6 className="mb-6 font-luxury text-xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
               Elevate Your Spirit with
-              <span className="block gradient-text">Victory Scented Fragrances</span>
+              <span className="block gradient-text">Fleur D'or Perfumes</span>
             </h6>
 
             <div className="flex flex-col gap-4 sm:flex-row justify-center">
@@ -51,6 +51,18 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center">
+          <Link
+            href="/about#story"
+            className="group flex flex-col items-center gap-2 text-white/70 transition-colors hover:text-[var(--gold)]"
+          >
+            <span className="rounded-full border border-white/30 px-6 py-2 text-sm font-medium uppercase tracking-widest backdrop-blur-sm transition-all group-hover:border-[var(--gold)] group-hover:bg-[var(--gold)]/10">
+              Our Story
+            </span>
+            <div className="h-12 w-[1px] bg-gradient-to-b from-white/70 to-transparent group-hover:from-[var(--gold)]" />
+          </Link>
         </div>
       </section>
 
