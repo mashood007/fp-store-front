@@ -22,28 +22,27 @@ export default function Footer() {
                 Flëur d&apos;Or
               </h3>
             </div>
-            <p className="mb-4 text-sm leading-relaxed text-white/70">
-              Your destination for premium perfumes and luxury fragrances. 
-              Discover authentic scents from the world&apos;s finest fragrance houses.
+            <p className="text-sm text-white/70 leading-relaxed italic mb-4">
+              &quot;<span className="text-[var(--gold)]">Rooted in love, inspired by memories and driven by passion</span>&quot;
             </p>
-            
+
             {/* Contact Info */}
             <div className="space-y-2 text-sm text-white/70">
               <div className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-[var(--gold)]" />
-                <a href="mailto:info@fleurdor.com" className="hover:text-[var(--gold)] transition-colors">
-                  info@fleurdor.com
+                <a href="mailto:info@fleurdorparfums.com" className="hover:text-[var(--gold)] transition-colors">
+                  admin@fleurdorparfums.com
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-[var(--gold)]" />
                 <a href="tel:+1234567890" className="hover:text-[var(--gold)] transition-colors">
-                  +1 (234) 567-890
+                  +971 56 9298 916
                 </a>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-[var(--gold)]" />
-                <span>123 Fragrance St, New York, NY</span>
+                <span>Ho. Al Musallah, Sharjah, UAE</span>
               </div>
             </div>
           </div>
@@ -77,8 +76,6 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { href: "/about", label: "About Us" },
-                { href: "/contact", label: "Contact" },
-                { href: "/shipping", label: "Shipping Info" },
                 { href: "/returns", label: "Returns" },
                 { href: "/faq", label: "FAQ" },
               ].map((link) => (
@@ -101,7 +98,7 @@ export default function Footer() {
               {[
                 { href: "/privacy", label: "Privacy Policy" },
                 { href: "/terms", label: "Terms of Service" },
-                { href: "/cookies", label: "Cookie Policy" },
+                { href: "/shipping-policy", label: "Shipping Policy" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -119,9 +116,8 @@ export default function Footer() {
               <h4 className="mb-3 font-semibold text-[var(--gold)]">Follow Us</h4>
               <div className="flex gap-2">
                 {[
-                  { Icon: Facebook, href: "#", label: "Facebook" },
-                  { Icon: Instagram, href: "#", label: "Instagram" },
-                  { Icon: Twitter, href: "#", label: "Twitter" },
+                  { Icon: Facebook, href: "https://www.facebook.com/share/1ZnqSzavSg/", label: "Facebook" },
+                  { Icon: Instagram, href: "https://www.instagram.com/azizia_intl?igsh=MW94ZWdlbzE1Njd1eA==", label: "Instagram" },
                 ].map(({ Icon, href, label }) => (
                   <a
                     key={label}
@@ -142,14 +138,14 @@ export default function Footer() {
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="text-center md:text-left">
               <p className="text-sm text-white/70">
-                © {new Date().getFullYear()} Flëur d&apos;Or. All rights reserved.
+                © {new Date().getFullYear()} Azizia International FZE. All rights reserved.
               </p>
             </div>
-            
+
             <div className="flex flex-wrap items-center justify-center gap-4">
               <span className="text-xs text-white/50">We Accept:</span>
               <div className="flex gap-2">
-                {["Visa", "Mastercard", "PayPal", "Apple Pay"].map((method) => (
+                {["Visa", "Mastercard", "Apple Pay"].map((method) => (
                   <div
                     key={method}
                     className="flex h-8 items-center rounded border border-[var(--gold)]/30 bg-black/50 px-3 text-xs font-medium text-white/70"

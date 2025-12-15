@@ -101,9 +101,9 @@ export default function AboutPage() {
                 Have questions or need assistance? We&apos;re here to help!
               </p>
               <div className="space-y-2 text-white/70">
-                <p>Email: support@fleurdor.com</p>
-                <p>Phone: +1 (555) 123-4567</p>
-                <p>Hours: Monday - Friday, 9AM - 6PM EST</p>
+                <p>Email: admin@fleurdor.com</p>
+                <p>Phone: +971 56 9298 916</p>
+                <p>Hours: Monday - Friday, 9AM - 5PM GST</p>
               </div>
             </section>
           </div>
