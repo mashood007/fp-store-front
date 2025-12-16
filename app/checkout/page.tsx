@@ -191,12 +191,22 @@ export default function CheckoutPage() {
     setCouponError("");
   };
 
-  // Calculate total with coupon discount and VAT
+  // Calculate total with coupon discount, shipping, and VAT
   const calculateTotal = () => {
     const subtotal = getCartTotal();
     const discount = appliedCoupon?.discount || 0;
-    const vat = subtotal * 0.05;
-    return subtotal + vat - discount;
+    const taxableAmount = Math.max(0, subtotal - discount);
+    const shipping = taxableAmount >= 250 ? 0 : 15;
+    const vat = taxableAmount * 0.05;
+    return subtotal + shipping + vat - discount;
+  };
+
+  // Calculate shipping cost
+  const calculateShipping = () => {
+    const subtotal = getCartTotal();
+    const discount = appliedCoupon?.discount || 0;
+    const taxableAmount = Math.max(0, subtotal - discount);
+    return taxableAmount >= 250 ? 0 : 15;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -833,34 +843,7 @@ export default function CheckoutPage() {
                     />
                   </div>
 
-                  {/* Shipping */}
-                  <div className="flex justify-between items-center py-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-white/80 font-medium">Shipping</span>
-                      <div className="rounded-full bg-green-500/20 px-2 py-0.5">
-                        <span className="text-xs font-medium text-green-400">FREE</span>
-                      </div>
-                    </div>
-                    <span className="font-semibold text-[var(--gold)] text-lg">
-                      {new Intl.NumberFormat('en-AE', {
-                        style: 'currency',
-                        currency: 'AED',
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0
-                      }).format(0)}
-                    </span>
-                  </div>
 
-                  {/* Tax */}
-                  <div className="flex justify-between items-center py-2">
-                    <span className="text-white/80 font-medium">Tax (VAT 5%)</span>
-                    <Price
-                      amount={getCartTotal() * 0.05}
-                      className="font-semibold text-white/70 text-lg"
-                      symbolClassName="text-white/70"
-                      symbolSize={18}
-                    />
-                  </div>
 
                   {/* Coupon Discount */}
                   {appliedCoupon && (
@@ -878,6 +861,35 @@ export default function CheckoutPage() {
                     </div>
                   )}
 
+                  {/* Tax */}
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-white/80 font-medium">Tax (VAT 5%)</span>
+                    <Price
+                      amount={Math.max(0, getCartTotal() - (appliedCoupon?.discount || 0)) * 0.05}
+                      className="font-semibold text-white/70 text-lg"
+                      symbolClassName="text-white/70"
+                      symbolSize={18}
+                    />
+                  </div>
+
+                  {/* Shipping */}
+                  <div className="flex justify-between items-center py-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-white/80 font-medium">Shipping</span>
+                      {calculateShipping() === 0 ? (
+                        <div className="rounded-full bg-green-500/20 px-2 py-0.5">
+                          <span className="text-xs font-medium text-green-400">FREE</span>
+                        </div>
+                      ) : null}
+                    </div>
+                    <Price
+                      amount={calculateShipping()}
+                      className={`font-semibold text-lg ${calculateShipping() === 0 ? 'text-[var(--gold)]' : 'text-white'}`}
+                      symbolClassName={calculateShipping() === 0 ? 'text-[var(--gold)]' : 'text-white'}
+                      symbolSize={18}
+                    />
+                  </div>
+
                   {/* Divider */}
                   <div className="border-t border-[var(--gold)]/30 my-4"></div>
 
@@ -893,7 +905,16 @@ export default function CheckoutPage() {
                   </div>
 
                   {/* Savings Badge */}
-                  {appliedCoupon ? (
+                  {appliedCoupon && calculateShipping() === 0 ? (
+                    <div className="flex items-center justify-center gap-2 text-sm text-green-400 bg-green-500/10 rounded-lg py-2 px-4">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span className="font-medium">
+                        You saved <Price amount={appliedCoupon.discount + (calculateShipping() === 0 ? 15 : 0)} className="inline" symbolClassName="text-green-400" symbolSize={12} /> total!
+                      </span>
+                    </div>
+                  ) : appliedCoupon ? (
                     <div className="flex items-center justify-center gap-2 text-sm text-green-400 bg-green-500/10 rounded-lg py-2 px-4">
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -902,14 +923,14 @@ export default function CheckoutPage() {
                         You saved <Price amount={appliedCoupon.discount} className="inline" symbolClassName="text-green-400" symbolSize={12} /> with coupon!
                       </span>
                     </div>
-                  ) : (
+                  ) : calculateShipping() === 0 ? (
                     <div className="flex items-center justify-center gap-2 text-sm text-green-400 bg-green-500/10 rounded-lg py-2 px-4">
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-medium">You saved on shipping!</span>
+                      <span className="font-medium">Free shipping on orders over AED 250!</span>
                     </div>
-                  )}
+                  ) : null}
                 </div>
               </div>
             </div>
