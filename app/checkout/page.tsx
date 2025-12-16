@@ -12,6 +12,16 @@ import Price from "@/components/Price";
 import { Address } from "@/types";
 
 export default function CheckoutPage() {
+  const UAE_EMIRATES = [
+    "Abu Dhabi",
+    "Dubai",
+    "Sharjah",
+    "Ajman",
+    "Umm Al Quwain",
+    "Ras Al Khaimah",
+    "Fujairah"
+  ];
+
   const { items, getCartTotal, clearCart } = useCart();
   const { customer, isAuthenticated, isLoading, token } = useAuth();
   const router = useRouter();
@@ -487,7 +497,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="md:col-span-2">
                     <label htmlFor="address2" className="mb-1 block text-sm font-medium text-white/70">
-                      Address Line 2 (Optional)
+                      Address Line 2
                     </label>
                     <input
                       type="text"
@@ -495,6 +505,7 @@ export default function CheckoutPage() {
                       name="address2"
                       value={formData.address2}
                       onChange={handleInputChange}
+                      required
                       className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
                     />
                   </div>
@@ -516,15 +527,21 @@ export default function CheckoutPage() {
                     <label htmlFor="state" className="mb-1 block text-sm font-medium text-white/70">
                       State
                     </label>
-                    <input
-                      type="text"
+                    <select
                       id="state"
                       name="state"
                       value={formData.state}
                       onChange={handleInputChange}
                       required
                       className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
-                    />
+                    >
+                      <option value="">Select Emirate</option>
+                      {UAE_EMIRATES.map((emirate) => (
+                        <option key={emirate} value={emirate}>
+                          {emirate}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label htmlFor="zipCode" className="mb-1 block text-sm font-medium text-white/70">
@@ -547,16 +564,11 @@ export default function CheckoutPage() {
                     <select
                       id="country"
                       name="country"
-                      value={formData.country}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
+                      value="UAE"
+                      disabled
+                      className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white opacity-50 cursor-not-allowed"
                     >
                       <option value="UAE">United Arab Emirates</option>
-                      <option value="US">United States</option>
-                      <option value="UK">United Kingdom</option>
-                      <option value="CA">Canada</option>
-                      <option value="AU">Australia</option>
                     </select>
                   </div>
                 </div>
@@ -598,7 +610,7 @@ export default function CheckoutPage() {
                     </div>
                     <div className="md:col-span-2">
                       <label htmlFor="billingAddress2" className="mb-1 block text-sm font-medium text-white/70">
-                        Address Line 2 (Optional)
+                        Address Line 2
                       </label>
                       <input
                         type="text"
@@ -606,6 +618,7 @@ export default function CheckoutPage() {
                         name="billingAddress2"
                         value={formData.billingAddress2}
                         onChange={handleInputChange}
+                        required={!formData.useSameAddress}
                         className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
                       />
                     </div>
@@ -627,15 +640,21 @@ export default function CheckoutPage() {
                       <label htmlFor="billingState" className="mb-1 block text-sm font-medium text-white/70">
                         State
                       </label>
-                      <input
-                        type="text"
+                      <select
                         id="billingState"
                         name="billingState"
                         value={formData.billingState}
                         onChange={handleInputChange}
                         required={!formData.useSameAddress}
                         className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
-                      />
+                      >
+                        <option value="">Select Emirate</option>
+                        {UAE_EMIRATES.map((emirate) => (
+                          <option key={emirate} value={emirate}>
+                            {emirate}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div>
                       <label htmlFor="billingZip" className="mb-1 block text-sm font-medium text-white/70">
@@ -658,16 +677,11 @@ export default function CheckoutPage() {
                       <select
                         id="billingCountry"
                         name="billingCountry"
-                        value={formData.billingCountry}
-                        onChange={handleInputChange}
-                        required={!formData.useSameAddress}
-                        className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white focus:border-[var(--gold)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/20"
+                        value="UAE"
+                        disabled
+                        className="w-full rounded-lg border border-[var(--gold)]/30 bg-black/50 px-4 py-2 text-white opacity-50 cursor-not-allowed"
                       >
                         <option value="UAE">United Arab Emirates</option>
-                        <option value="US">United States</option>
-                        <option value="UK">United Kingdom</option>
-                        <option value="CA">Canada</option>
-                        <option value="AU">Australia</option>
                       </select>
                     </div>
                   </div>
