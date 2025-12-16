@@ -39,6 +39,7 @@ export interface Collection {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  title: string;
 }
 
 export interface CollectionsResponse {

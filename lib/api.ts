@@ -60,9 +60,7 @@ export async function getCollections(params?: {
 
   const url = `${API_BASE_URL}/collections${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
 
-  const response = await fetch(url, {
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
-  });
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error("Failed to fetch collections");

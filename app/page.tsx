@@ -117,7 +117,7 @@ export default async function HomePage() {
                       </p>
                     )}
                     <span className="inline-flex items-center gap-2 text-[var(--gold)] font-medium">
-                      View Collection
+                      {collection.title} Collection
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
                     </span>
                   </div>
