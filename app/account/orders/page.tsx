@@ -90,7 +90,7 @@ export default function OrdersPage() {
   };
 
   const canCancelOrder = (order: Order) => {
-    return ["PENDING", "CONFIRMED"].includes(order.status);
+    return ["PENDING"].includes(order.status);
   };
 
   if (isLoading || isLoadingOrders) {
