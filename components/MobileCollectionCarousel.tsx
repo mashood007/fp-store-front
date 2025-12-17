@@ -108,7 +108,7 @@ export default function MobileCollectionCarousel({ collections }: MobileCollecti
                                             </p>
                                         )}
                                         <span className="inline-flex items-center gap-1 text-xs text-[var(--gold)] font-medium">
-                                            View Collection
+                                            {collection.title} Collection
                                             <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                                         </span>
                                     </div>
