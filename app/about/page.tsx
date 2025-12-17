@@ -25,7 +25,7 @@ export default function AboutPage() {
                 A year before launching his company, he immersed himself in the world of perfumery, studying fragrance notes, understanding industry craftsmanship and exploring how luxury scents are brought to life. This deep curiosity soon transformed into purpose.
               </p>
               <p className="mb-4 text-lg text-white/70 leading-relaxed">
-                In honour of the two people who shaped his life, he founded Azizia International, named lovingly after his parents, P Abdul Azeez and Shuhaiba Moosapy. With a commitment to creating a luxury, quality-driven perfume brand, he launched the brand&apos;s first signature line, Fleur D&apos;or in {`{---date}`}.
+                In honour of the two people who shaped his life, he founded Azizia International, named lovingly after his parents, P Abdul Azeez and Shuhaiba Moosapy. With a commitment to creating a luxury, quality-driven perfume brand, he launched the brand&apos;s first signature line, Fleur D&apos;or in {`10/10/2025`}.
               </p>
               <p className="mb-4 text-lg text-white/70 leading-relaxed">
                 Fleur D&apos;or meaning &apos;Golden Flower&apos; in French, embodies the timeless beauty of the orange blossom, a fragrance that awakens joy, stirs nostalgia and celebrates life&apos;s most cherished moments.
