@@ -27,7 +27,7 @@ function TrackOrderContent() {
       setOrderNumber(orderNumberParam);
       handleTrackOrder(emailParam, orderNumberParam);
     }
-  }, []); // Only run once on mount
+  }, [searchParams, order, isLoading]); // Include dependencies used in the effect
 
   const handleTrackOrder = async (emailValue: string, orderNumberValue: string) => {
     if (!emailValue.trim() || !orderNumberValue.trim()) {

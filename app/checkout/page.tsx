@@ -318,7 +318,7 @@ export default function CheckoutPage() {
               Checkout Options
             </h1>
             <p className="text-white/70">
-              Choose how you'd like to proceed with your order
+              Choose how you&apos;d like to proceed with your order
             </p>
           </div>
 
@@ -374,7 +374,7 @@ export default function CheckoutPage() {
               href="/auth/register"
               className="text-[var(--gold)] hover:text-[var(--gold-light)] transition-colors text-sm"
             >
-              Don't have an account? Create one for better experience →
+              Don&apos;t have an account? Create one for better experience →
             </Link>
           </div>
         </div>
@@ -484,7 +484,7 @@ export default function CheckoutPage() {
                 <div className="flex-1">
                   <p className="text-blue-400 font-medium text-sm">Guest Checkout</p>
                   <p className="text-blue-400/70 text-sm mt-1">
-                    You're checking out without an account. You'll receive order updates via email.
+                    You&apos;re checking out without an account. You&apos;ll receive order updates via email.
                     <Link href="/auth/register" className="ml-2 underline hover:text-blue-300">
                       Create an account
                     </Link> for a better experience.
