@@ -162,6 +162,7 @@ export interface Order {
   cancelReason?: string;
   orderProducts: OrderProduct[];
   checkout?: Checkout;
+  deliveryOrder?: DeliveryOrder;
   createdAt: string;
   updatedAt: string;
 }
@@ -221,6 +222,19 @@ export interface CheckoutResponse {
   message: string;
   checkout: Checkout;
   paymentUrl?: string;
+}
+
+// Delivery Types
+export interface DeliveryOrder {
+  id: string;
+  orderId: string;
+  airwayBillNumber: string;
+  destinationCode?: string;
+  status?: string;
+  lastTrackingUpdate?: string;
+  apiResponse?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // Coupon Types

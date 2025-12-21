@@ -107,11 +107,11 @@ export async function getCustomerProfile(token: string): Promise<CustomerUser> {
 // Order APIs
 export async function createOrder(
   orderData: CreateOrderRequest,
-  token: string
+  token?: string | null
 ): Promise<Order> {
   const response = await fetch(`${API_BASE_URL}/orders`, {
     method: "POST",
-    headers: getAuthHeaders(token),
+    headers: getAuthHeaders(token || undefined),
     body: JSON.stringify(orderData),
   });
 
@@ -242,11 +242,11 @@ export async function createStripeCheckoutSession(
     zip: string;
     country: string;
   },
-  token: string
+  token?: string | null
 ): Promise<{ sessionId: string; sessionUrl: string; checkout: any }> {
   const response = await fetch(`${API_BASE_URL}/checkout/create-session`, {
     method: "POST",
-    headers: getAuthHeaders(token),
+    headers: getAuthHeaders(token || undefined),
     body: JSON.stringify({
       orderId,
       billingAddress,
@@ -282,6 +282,21 @@ export async function verifyCoupon(
       valid: false,
       error: error.error || "Failed to verify coupon",
     };
+  }
+
+  return response.json();
+}
+
+// Guest Order Tracking API
+export async function trackGuestOrder(
+  email: string,
+  orderNumber: string
+): Promise<{ order: Order }> {
+  const response = await fetch(`${API_BASE_URL}/orders/track?email=${encodeURIComponent(email)}&orderNumber=${encodeURIComponent(orderNumber)}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || "Failed to track order");
   }
 
   return response.json();
