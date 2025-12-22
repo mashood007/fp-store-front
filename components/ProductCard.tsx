@@ -1,10 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Product } from "@/types";
-import { getImageUrl } from "@/lib/utils";
 import { ShoppingBag, Heart, Eye, Plus, Minus, Trash2 } from "lucide-react";
 import Price from "./Price";
 import { useCart } from "@/context/CartContext";
+import ProductImageCarousel from "./ProductImageCarousel";
 
 interface ProductCardProps {
   product: Product;
@@ -13,8 +12,6 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const { items, updateQuantity, removeFromCart } = useCart();
-  const primaryImage = product.images?.[0];
-  const imageUrl = primaryImage ? getImageUrl(primaryImage.url) : "/placeholder.svg";
   const isOutOfStock = product.availableStock <= 0;
 
   // Check if product is in cart and get its quantity
@@ -25,21 +22,19 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
     <div className={`group relative overflow-hidden rounded-2xl glass shadow-soft transition-all duration-300 ${isOutOfStock ? 'opacity-60' : 'hover:shadow-luxury hover:-translate-y-1'}`}>
       {/* Product Image */}
       <Link href={`/products/${product.friendlyId}`} className="block">
-        <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-[var(--gold)]/10 to-black">
-          <Image
-            src={imageUrl}
-            alt={primaryImage?.alt || product.name}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        <div className="relative">
+          <ProductImageCarousel
+            images={product.images || []}
+            productName={product.name}
+            className="group"
           />
-          
+
           {/* Gradient Overlay on Hover */}
           <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent ${isOutOfStock ? 'opacity-100' : 'opacity-0 transition-opacity duration-300 group-hover:opacity-100'}`} />
 
           {/* Out of Stock Overlay */}
           {isOutOfStock && (
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
               <span className="text-white font-semibold text-lg bg-black/70 px-4 py-2 rounded">
                 Out of Stock
               </span>
@@ -48,7 +43,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
 
           {/* Category Badge */}
           {product.category && (
-            <div className="absolute left-3 top-3">
+            <div className="absolute left-3 top-3 z-20">
               <span className="rounded-full glass px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--gold)]">
                 {product.category}
               </span>

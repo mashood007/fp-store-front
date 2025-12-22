@@ -3,10 +3,9 @@
 import { Product } from "@/types";
 import { ShoppingBag, Plus, Minus, Trash2 } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
-import { getImageUrl } from "@/lib/utils";
 import Price from "./Price";
 import { useCart } from "@/context/CartContext";
+import ProductImageCarousel from "./ProductImageCarousel";
 
 interface MobileProductCardProps {
     product: Product;
@@ -15,8 +14,6 @@ interface MobileProductCardProps {
 
 export default function MobileProductCard({ product, onAddToCart }: MobileProductCardProps) {
     const { items, updateQuantity, removeFromCart } = useCart();
-    const primaryImage = product.images?.[0];
-    const imageUrl = primaryImage ? getImageUrl(primaryImage.url) : "/placeholder.svg";
     const isOutOfStock = product.availableStock <= 0;
 
     // Check if product is in cart and get its quantity
@@ -27,18 +24,16 @@ export default function MobileProductCard({ product, onAddToCart }: MobileProduc
         <div className={`group relative overflow-hidden rounded-xl glass shadow-sm ${isOutOfStock ? 'opacity-60' : ''}`}>
             {/* Product Image */}
             <Link href={`/products/${product.friendlyId}`} className="block">
-                <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-[var(--gold)]/10 to-black">
-                    <Image
-                        src={imageUrl}
-                        alt={primaryImage?.alt || product.name}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 50vw"
+                <div className="relative">
+                    <ProductImageCarousel
+                        images={product.images || []}
+                        productName={product.name}
+                        className="group"
                     />
 
                     {/* Out of Stock Overlay */}
                     {isOutOfStock && (
-                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
                             <span className="text-white font-medium text-sm bg-black/70 px-3 py-1 rounded">
                                 Out of Stock
                             </span>
