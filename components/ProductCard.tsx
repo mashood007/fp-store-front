@@ -2,8 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@/types";
 import { getImageUrl } from "@/lib/utils";
-import { ShoppingBag, Heart, Eye } from "lucide-react";
+import { ShoppingBag, Heart, Eye, Plus, Minus, Trash2 } from "lucide-react";
 import Price from "./Price";
+import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: Product;
@@ -11,11 +12,17 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
+  const { items, updateQuantity, removeFromCart } = useCart();
   const primaryImage = product.images?.[0];
   const imageUrl = primaryImage ? getImageUrl(primaryImage.url) : "/placeholder.svg";
+  const isOutOfStock = product.availableStock <= 0;
+
+  // Check if product is in cart and get its quantity
+  const cartItem = items.find(item => item.product.id === product.id);
+  const cartQuantity = cartItem?.quantity || 0;
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl glass shadow-soft transition-all duration-300 hover:shadow-luxury hover:-translate-y-1">
+    <div className={`group relative overflow-hidden rounded-2xl glass shadow-soft transition-all duration-300 ${isOutOfStock ? 'opacity-60' : 'hover:shadow-luxury hover:-translate-y-1'}`}>
       {/* Product Image */}
       <Link href={`/products/${product.friendlyId}`} className="block">
         <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-[var(--gold)]/10 to-black">
@@ -28,7 +35,16 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
           />
           
           {/* Gradient Overlay on Hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent ${isOutOfStock ? 'opacity-100' : 'opacity-0 transition-opacity duration-300 group-hover:opacity-100'}`} />
+
+          {/* Out of Stock Overlay */}
+          {isOutOfStock && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <span className="text-white font-semibold text-lg bg-black/70 px-4 py-2 rounded">
+                Out of Stock
+              </span>
+            </div>
+          )}
 
           {/* Category Badge */}
           {product.category && (
@@ -72,10 +88,10 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
           </p>
         )}
 
-        {/* Price and Add to Cart */}
+        {/* Price and Cart Controls */}
         <div className="flex items-center justify-between">
           <div>
-            <Price 
+            <Price
               amount={product.price}
               className="text-xl font-bold text-[var(--gold)]"
               symbolClassName="text-[var(--gold)]"
@@ -84,15 +100,59 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
             <p className="text-xs text-white/50">Free Shipping</p>
           </div>
 
-          {onAddToCart && (
-            <button
-              onClick={() => onAddToCart(product)}
-              className="flex items-center justify-center gap-2 rounded-full luxury-button px-4 py-2.5 text-sm font-medium text-black shadow-md transition-all hover:gap-3 active:scale-95"
-              aria-label="Add to cart"
-            >
-              <ShoppingBag className="h-4 w-4" />
-              <span className="hidden sm:inline">Add</span>
-            </button>
+          {cartQuantity > 0 ? (
+            // Quantity controls when item is in cart
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => updateQuantity(product.id, cartQuantity - 1)}
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 active:scale-95"
+                aria-label="Decrease quantity"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+
+              <span className="min-w-[2rem] text-center text-sm font-medium text-white">
+                {cartQuantity}
+              </span>
+
+              <button
+                onClick={() => updateQuantity(product.id, cartQuantity + 1)}
+                disabled={cartQuantity >= product.availableStock}
+                className={`flex h-8 w-8 items-center justify-center rounded-full transition-all active:scale-95 ${
+                  cartQuantity >= product.availableStock
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    : 'bg-[var(--gold)] text-black hover:bg-[var(--gold)]/90'
+                }`}
+                aria-label="Increase quantity"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+
+              <button
+                onClick={() => removeFromCart(product.id)}
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500/20 text-red-400 transition-all hover:bg-red-500/30 active:scale-95"
+                aria-label="Remove from cart"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          ) : (
+            // Add to cart button when item is not in cart
+            onAddToCart && (
+              <button
+                onClick={() => !isOutOfStock && onAddToCart(product)}
+                disabled={isOutOfStock}
+                className={`flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-medium shadow-md transition-all active:scale-95 ${
+                  isOutOfStock
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    : 'luxury-button text-black hover:gap-3'
+                }`}
+                aria-label={isOutOfStock ? "Out of stock" : "Add to cart"}
+              >
+                <ShoppingBag className="h-4 w-4" />
+                <span className="hidden sm:inline">{isOutOfStock ? 'Out of Stock' : 'Add'}</span>
+              </button>
+            )
           )}
         </div>
       </div>

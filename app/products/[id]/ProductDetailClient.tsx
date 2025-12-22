@@ -18,6 +18,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   const [selectedImage, setSelectedImage] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
   const { addToCart } = useCart();
+  const isOutOfStock = product.availableStock <= 0;
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -119,14 +120,16 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </div>
 
               <div className="flex items-baseline gap-3">
-                <Price 
+                <Price
                   amount={product.price}
                   className="text-4xl font-bold text-[var(--gold)]"
                   symbolClassName="text-[var(--gold)]"
                   symbolSize={32}
                 />
-                <span className="rounded-full glass px-3 py-1 text-sm font-medium text-[var(--gold)]">
-                  In Stock
+                <span className={`rounded-full glass px-3 py-1 text-sm font-medium ${
+                  isOutOfStock ? 'text-red-400 bg-red-900/20' : 'text-[var(--gold)]'
+                }`}>
+                  {isOutOfStock ? 'Out of Stock' : 'In Stock'}
                 </span>
               </div>
             </div>
@@ -149,20 +152,34 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 Quantity
               </label>
               <div className="flex items-center gap-4">
-                <div className="flex items-center rounded-xl border-2 border-[var(--gold)]/30 glass shadow-sm">
+                <div className={`flex items-center rounded-xl glass shadow-sm border-2 ${
+                  isOutOfStock ? 'border-gray-600' : 'border-[var(--gold)]/30'
+                }`}>
                   <button
-                    onClick={decrementQuantity}
-                    className="p-4 text-white/70 transition-colors hover:text-[var(--gold)]"
+                    onClick={isOutOfStock ? undefined : decrementQuantity}
+                    disabled={isOutOfStock}
+                    className={`p-4 transition-colors ${
+                      isOutOfStock
+                        ? 'text-gray-500 cursor-not-allowed'
+                        : 'text-white/70 hover:text-[var(--gold)]'
+                    }`}
                     aria-label="Decrease quantity"
                   >
                     <Minus className="h-5 w-5" />
                   </button>
-                  <span className="min-w-[80px] px-6 py-4 text-center text-lg font-semibold text-white">
+                  <span className={`min-w-[80px] px-6 py-4 text-center text-lg font-semibold ${
+                    isOutOfStock ? 'text-gray-500' : 'text-white'
+                  }`}>
                     {quantity}
                   </span>
                   <button
-                    onClick={incrementQuantity}
-                    className="p-4 text-white/70 transition-colors hover:text-[var(--gold)]"
+                    onClick={isOutOfStock ? undefined : incrementQuantity}
+                    disabled={isOutOfStock}
+                    className={`p-4 transition-colors ${
+                      isOutOfStock
+                        ? 'text-gray-500 cursor-not-allowed'
+                        : 'text-white/70 hover:text-[var(--gold)]'
+                    }`}
                     aria-label="Increase quantity"
                   >
                     <Plus className="h-5 w-5" />
@@ -174,11 +191,20 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             {/* Action Buttons */}
             <div className="flex gap-3">
               <button
-                onClick={handleAddToCart}
-                disabled={isAdded}
-                className="flex flex-1 items-center justify-center gap-3 rounded-xl luxury-button py-4 text-lg font-semibold text-black shadow-md transition-all disabled:opacity-90"
+                onClick={isOutOfStock ? undefined : handleAddToCart}
+                disabled={isAdded || isOutOfStock}
+                className={`flex flex-1 items-center justify-center gap-3 rounded-xl py-4 text-lg font-semibold shadow-md transition-all ${
+                  isOutOfStock
+                    ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                    : 'luxury-button text-black disabled:opacity-90'
+                }`}
               >
-                {isAdded ? (
+                {isOutOfStock ? (
+                  <>
+                    <ShoppingBag className="h-5 w-5" />
+                    Out of Stock
+                  </>
+                ) : isAdded ? (
                   <>
                     <Check className="h-5 w-5" />
                     Added to Cart
@@ -234,7 +260,9 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 )}
                 <div className="flex justify-between border-b border-[var(--gold)]/20 pb-3">
                   <dt className="text-white/60">Availability</dt>
-                  <dd className="font-medium text-[var(--gold)]">In Stock</dd>
+                  <dd className={`font-medium ${isOutOfStock ? 'text-red-400' : 'text-[var(--gold)]'}`}>
+                    {isOutOfStock ? 'Out of Stock' : 'In Stock'}
+                  </dd>
                 </div>
                 <div className="flex justify-between">
                   <dt className="text-white/60">Shipping</dt>

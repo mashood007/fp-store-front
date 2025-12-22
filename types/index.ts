@@ -16,6 +16,7 @@ export interface Product {
   price: number;
   category: string | null;
   isActive: boolean;
+  availableStock: number;
   images: ProductImage[];
   createdAt: string;
   updatedAt: string;
