@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Allow all important pages
+Allow: /products
+Allow: /collections
+Allow: /about
+Allow: /contact
+Allow: /search
+Allow: /cart
+Allow: /checkout
+
+# Disallow admin areas
+Disallow: /admin
+Disallow: /api/
+Disallow: /_next/
+Disallow: /node_modules/
+
+# Sitemap
+Sitemap: https://www.fleurdorparfums.com/sitemap.xml

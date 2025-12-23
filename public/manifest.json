@@ -1,0 +1,35 @@
+{
+  "name": "Flëur d'Or - Luxury Perfume Boutique",
+  "short_name": "Flëur d'Or",
+  "description": "Premium fragrances and luxury perfumes in UAE. Authentic scents for men and women.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#FFD700",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "lifestyle"],
+  "lang": "en-AE",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/logos/logo1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logos/logo1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/logos/logo1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}

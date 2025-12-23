@@ -1,3 +1,32 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Flëur d'Or | Luxury Perfume Brand Story UAE",
+  description: "Discover the story behind Flëur d'Or, UAE's premium perfume brand. Learn about our commitment to authentic fragrances, luxury scents, and exceptional customer experience.",
+  keywords: [
+    "about Fleur d'Or",
+    "luxury perfume brand UAE",
+    "perfume brand story",
+    "authentic fragrances UAE",
+    "premium perfume boutique",
+    "Fleur d'Or story",
+    "luxury perfume UAE",
+    "perfume brand Dubai"
+  ],
+  openGraph: {
+    title: "About Flëur d'Or | Luxury Perfume Brand Story UAE",
+    description: "Discover the story behind Flëur d'Or, UAE's premium perfume brand. Learn about our commitment to authentic fragrances and luxury scents.",
+    url: "https://www.fleurdorparfums.com/about",
+    siteName: "Flëur d'Or Perfumes",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Flëur d'Or | Luxury Perfume Brand Story UAE",
+    description: "Discover the story behind Flëur d'Or, UAE's premium perfume brand.",
+  },
+};
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-black py-12">
