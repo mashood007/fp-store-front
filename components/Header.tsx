@@ -7,6 +7,8 @@ import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { getBanners } from "@/lib/api";
+import { Banner } from "@/types";
 
 export default function Header() {
   const { getCartCount } = useCart();
@@ -14,6 +16,8 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [banners, setBanners] = useState<Banner[]>([]);
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const router = useRouter();
   const pathname = usePathname();
   const cartCount = getCartCount();
@@ -30,6 +34,32 @@ export default function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Fetch banners on component mount
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await getBanners();
+        setBanners(response.banners);
+      } catch (error) {
+        console.error("Failed to fetch banners:", error);
+      }
+    };
+    fetchBanners();
+  }, []);
+
+  // Cycle through banners every 5 seconds
+  useEffect(() => {
+    if (banners.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentBannerIndex((prevIndex) =>
+        prevIndex === banners.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); // Change banner every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [banners]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,9 +81,11 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[var(--gold)]/20 bg-black/95 backdrop-blur-lg shadow-luxury">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] py-2 text-center text-xs text-black font-medium md:text-sm">
-        <p>Free Shipping on Orders Over AED 250</p>
-      </div>
+      {banners.length > 0 && (
+        <div className="bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold)] py-2 text-center text-xs text-black font-medium md:text-sm">
+          <p dangerouslySetInnerHTML={{ __html: banners[currentBannerIndex]?.message || "Welcome to our store!" }} />
+        </div>
+      )}
 
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex h-16 items-center justify-between gap-6 md:h-20">

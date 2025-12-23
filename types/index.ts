@@ -238,6 +238,19 @@ export interface DeliveryOrder {
   updatedAt: string;
 }
 
+// Banner Types
+export interface Banner {
+  id: string;
+  message: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BannersResponse {
+  banners: Banner[];
+  count: number;
+}
+
 // Coupon Types
 export interface CouponVerificationResponse {
   valid: boolean;

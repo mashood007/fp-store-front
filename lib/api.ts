@@ -1,4 +1,4 @@
-import { Product, ProductsResponse } from "@/types";
+import { Product, ProductsResponse, Banner, BannersResponse } from "@/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api/store";
 
@@ -44,6 +44,19 @@ export async function getProduct(id: string): Promise<Product> {
 
 export async function searchProducts(query: string): Promise<ProductsResponse> {
   return getProducts({ search: query });
+}
+
+// Banners API
+export async function getBanners(): Promise<BannersResponse> {
+  const response = await fetch(`${API_BASE_URL}/banners`, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch banners");
+  }
+
+  return response.json();
 }
 
 // Collections API
