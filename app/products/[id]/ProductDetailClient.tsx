@@ -49,7 +49,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           {/* Product Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="group relative aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--gold)]/20 to-black shadow-soft">
+            <div className="group relative aspect-[2/3] overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--gold)]/20 to-black shadow-soft">
               {product.images && product.images.length > 0 ? (
                 <Image
                   src={getImageUrl(product.images[selectedImage].url)}
@@ -64,7 +64,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <Package className="h-24 w-24" />
                 </div>
               )}
-              
+
               {/* Category Badge */}
               {product.category && (
                 <div className="absolute left-4 top-4">
@@ -82,11 +82,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   <button
                     key={image.id}
                     onClick={() => setSelectedImage(index)}
-                    className={`relative aspect-square overflow-hidden rounded-xl border-2 transition-all hover:scale-105 ${
-                      selectedImage === index
+                    className={`relative aspect-square overflow-hidden rounded-xl border-2 transition-all hover:scale-105 ${selectedImage === index
                         ? "border-[var(--gold)] shadow-md"
                         : "border-white/20 hover:border-[var(--gold)]/50"
-                    }`}
+                      }`}
                   >
                     <Image
                       src={getImageUrl(image.url)}
@@ -108,7 +107,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <h1 className="mb-3 font-luxury text-4xl font-bold leading-tight text-white md:text-5xl">
                 {product.name}
               </h1>
-              
+
               {/* Rating (Mock) */}
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex">
@@ -126,9 +125,8 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                   symbolClassName="text-[var(--gold)]"
                   symbolSize={32}
                 />
-                <span className={`rounded-full glass px-3 py-1 text-sm font-medium ${
-                  isOutOfStock ? 'text-red-400 bg-red-900/20' : 'text-[var(--gold)]'
-                }`}>
+                <span className={`rounded-full glass px-3 py-1 text-sm font-medium ${isOutOfStock ? 'text-red-400 bg-red-900/20' : 'text-[var(--gold)]'
+                  }`}>
                   {isOutOfStock ? 'Out of Stock' : 'In Stock'}
                 </span>
               </div>
@@ -152,34 +150,30 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 Quantity
               </label>
               <div className="flex items-center gap-4">
-                <div className={`flex items-center rounded-xl glass shadow-sm border-2 ${
-                  isOutOfStock ? 'border-gray-600' : 'border-[var(--gold)]/30'
-                }`}>
+                <div className={`flex items-center rounded-xl glass shadow-sm border-2 ${isOutOfStock ? 'border-gray-600' : 'border-[var(--gold)]/30'
+                  }`}>
                   <button
                     onClick={isOutOfStock ? undefined : decrementQuantity}
                     disabled={isOutOfStock}
-                    className={`p-4 transition-colors ${
-                      isOutOfStock
+                    className={`p-4 transition-colors ${isOutOfStock
                         ? 'text-gray-500 cursor-not-allowed'
                         : 'text-white/70 hover:text-[var(--gold)]'
-                    }`}
+                      }`}
                     aria-label="Decrease quantity"
                   >
                     <Minus className="h-5 w-5" />
                   </button>
-                  <span className={`min-w-[80px] px-6 py-4 text-center text-lg font-semibold ${
-                    isOutOfStock ? 'text-gray-500' : 'text-white'
-                  }`}>
+                  <span className={`min-w-[80px] px-6 py-4 text-center text-lg font-semibold ${isOutOfStock ? 'text-gray-500' : 'text-white'
+                    }`}>
                     {quantity}
                   </span>
                   <button
                     onClick={isOutOfStock ? undefined : incrementQuantity}
                     disabled={isOutOfStock}
-                    className={`p-4 transition-colors ${
-                      isOutOfStock
+                    className={`p-4 transition-colors ${isOutOfStock
                         ? 'text-gray-500 cursor-not-allowed'
                         : 'text-white/70 hover:text-[var(--gold)]'
-                    }`}
+                      }`}
                     aria-label="Increase quantity"
                   >
                     <Plus className="h-5 w-5" />
@@ -193,11 +187,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               <button
                 onClick={isOutOfStock ? undefined : handleAddToCart}
                 disabled={isAdded || isOutOfStock}
-                className={`flex flex-1 items-center justify-center gap-3 rounded-xl py-4 text-lg font-semibold shadow-md transition-all ${
-                  isOutOfStock
+                className={`flex flex-1 items-center justify-center gap-3 rounded-xl py-4 text-lg font-semibold shadow-md transition-all ${isOutOfStock
                     ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                     : 'luxury-button text-black disabled:opacity-90'
-                }`}
+                  }`}
               >
                 {isOutOfStock ? (
                   <>

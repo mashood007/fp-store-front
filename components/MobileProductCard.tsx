@@ -77,11 +77,10 @@ export default function MobileProductCard({ product, onAddToCart }: MobileProduc
                             <button
                                 onClick={() => updateQuantity(product.id, cartQuantity + 1)}
                                 disabled={cartQuantity >= product.availableStock}
-                                className={`flex h-6 w-6 items-center justify-center rounded-full text-xs transition-all active:scale-95 ${
-                                    cartQuantity >= product.availableStock
+                                className={`flex h-6 w-6 items-center justify-center rounded-full text-xs transition-all active:scale-95 ${cartQuantity >= product.availableStock
                                         ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
                                         : 'bg-[var(--gold)] text-black'
-                                }`}
+                                    }`}
                                 aria-label="Increase quantity"
                             >
                                 <Plus className="h-3 w-3" />
@@ -100,9 +99,8 @@ export default function MobileProductCard({ product, onAddToCart }: MobileProduc
                         <button
                             onClick={() => !isOutOfStock && onAddToCart(product)}
                             disabled={isOutOfStock}
-                            className={`flex h-8 w-8 items-center justify-center rounded-full shadow-sm active:scale-95 ${
-                                isOutOfStock ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-[var(--gold)] text-black'
-                            }`}
+                            className={`flex h-8 w-8 items-center justify-center rounded-full shadow-sm active:scale-95 ${isOutOfStock ? 'bg-gray-600 text-gray-400 cursor-not-allowed' : 'bg-[var(--gold)] text-black'
+                                }`}
                             aria-label={isOutOfStock ? "Out of stock" : "Add to cart"}
                         >
                             <ShoppingBag className="h-4 w-4" />
