@@ -203,10 +203,14 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <Link href="/checkout" className="btn-primary mt-6 w-full group">
-                  Proceed to Checkout
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Link>
+                <div className="flex w-full mt-2">
+                  <Link
+                    href="/checkout"
+                    className=" w-full inline-flex items-center justify-center h-11 px-6 rounded-md bg-[var(--gold)] text-black font-semibold shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-[1px] active:translate-y-0 active:shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--gold)] focus:ring-offset-2"
+                  >
+                    Checkout
+                  </Link>
+                </div>
 
                 <Link
                   href="/products"
