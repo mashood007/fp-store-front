@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Product } from "@/types";
 import { getImageUrl } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
-import { ShoppingBag, Check, Minus, Plus, Heart, Share2, Shield, Truck, Package, Star } from "lucide-react";
+import { ShoppingBag, Check, Minus, Plus, Heart, Share2, Shield, Truck, Package, Star, Ruler, Info, Tag, CheckCircle } from "lucide-react";
 import Link from "next/link";
 import Price from "@/components/Price";
 
@@ -104,6 +104,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
           <div className="space-y-6">
             {/* Title and Price */}
             <div>
+            {product.description}
               <h1 className="mb-3 font-luxury text-4xl font-bold leading-tight text-white md:text-5xl">
                 {product.name}
               </h1>
@@ -119,12 +120,24 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </div>
 
               <div className="flex items-baseline gap-3">
-                <Price
-                  amount={product.price}
-                  className="text-4xl font-bold text-[var(--gold)]"
-                  symbolClassName="text-[var(--gold)]"
-                  symbolSize={32}
-                />
+                <div>
+                  {product.originalPrice && (
+                    <div className="mb-2">
+                      <Price
+                        amount={product.originalPrice}
+                        className="text-2xl font-medium text-gray-400 line-through"
+                        symbolClassName="text-gray-400"
+                        symbolSize={20}
+                      />
+                    </div>
+                  )}
+                  <Price
+                    amount={product.price}
+                    className="text-4xl font-bold text-[var(--gold)]"
+                    symbolClassName="text-[var(--gold)]"
+                    symbolSize={32}
+                  />
+                </div>
                 <span className={`rounded-full glass px-3 py-1 text-sm font-medium ${isOutOfStock ? 'text-red-400 bg-red-900/20' : 'text-[var(--gold)]'
                   }`}>
                   {isOutOfStock ? 'Out of Stock' : 'In Stock'}
@@ -133,13 +146,10 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
 
             {/* Description */}
-            {product.description && (
+            {product.notes && (
               <div className="border-y border-[var(--gold)]/20 py-6">
-                <h2 className="mb-3 text-lg font-semibold text-white">
-                  About This Fragrance
-                </h2>
                 <p className="leading-relaxed text-white/70">
-                  {product.description}
+                {product.notes}
                 </p>
               </div>
             )}
@@ -236,32 +246,55 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </div>
 
             {/* Product Details */}
-            <div className="rounded-2xl glass p-6">
-              <h2 className="mb-4 text-lg font-semibold text-white">
-                Product Details
-              </h2>
-              <dl className="space-y-3">
-                <div className="flex justify-between border-b border-[var(--gold)]/20 pb-3">
-                  <dt className="text-white/60">Product ID</dt>
-                  <dd className="font-medium text-white">{product.friendlyId}</dd>
-                </div>
+            <div className="rounded-2xl glass p-6 border border-[var(--gold)]/20 shadow-luxury">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 {product.category && (
-                  <div className="flex justify-between border-b border-[var(--gold)]/20 pb-3">
-                    <dt className="text-white/60">Category</dt>
-                    <dd className="font-medium text-white">{product.category}</dd>
+                  <div className="flex items-center gap-3 p-4 rounded-xl bg-black/30 border border-[var(--gold)]/10 hover:border-[var(--gold)]/30 transition-all">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--gold)]/20">
+                      <Tag className="h-5 w-5 text-[var(--gold)]" />
+                    </div>
+                    <div className="flex-1">
+                      <dt className="text-xs text-white/60 uppercase tracking-wider mb-1">Category</dt>
+                      <dd className="font-semibold text-white capitalize">{product.category}</dd>
+                    </div>
                   </div>
                 )}
-                <div className="flex justify-between border-b border-[var(--gold)]/20 pb-3">
-                  <dt className="text-white/60">Availability</dt>
-                  <dd className={`font-medium ${isOutOfStock ? 'text-red-400' : 'text-[var(--gold)]'}`}>
-                    {isOutOfStock ? 'Out of Stock' : 'In Stock'}
-                  </dd>
+
+                {product.size && (
+                  <div className="flex items-center gap-3 p-4 rounded-xl bg-black/30 border border-[var(--gold)]/10 hover:border-[var(--gold)]/30 transition-all">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--gold)]/20">
+                      <Ruler className="h-5 w-5 text-[var(--gold)]" />
+                    </div>
+                    <div className="flex-1">
+                      <dt className="text-xs text-white/60 uppercase tracking-wider mb-1">Size</dt>
+                      <dd className="font-semibold text-white">{product.size}</dd>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-black/30 border border-[var(--gold)]/10 hover:border-[var(--gold)]/30 transition-all">
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${isOutOfStock ? 'bg-red-500/20' : 'bg-green-500/20'}`}>
+                    <CheckCircle className={`h-5 w-5 ${isOutOfStock ? 'text-red-400' : 'text-green-400'}`} />
+                  </div>
+                  <div className="flex-1">
+                    <dt className="text-xs text-white/60 uppercase tracking-wider mb-1">Availability</dt>
+                    <dd className={`font-semibold ${isOutOfStock ? 'text-red-400' : 'text-green-400'}`}>
+                      {isOutOfStock ? 'Out of Stock' : 'In Stock'}
+                    </dd>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <dt className="text-white/60">Shipping</dt>
-                  <dd className="font-medium text-white">Free (3-5 days)</dd>
+
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-black/30 border border-[var(--gold)]/10 hover:border-[var(--gold)]/30 transition-all">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--gold)]/20">
+                    <Truck className="h-5 w-5 text-[var(--gold)]" />
+                  </div>
+                  <div className="flex-1">
+                    <dt className="text-xs text-white/60 uppercase tracking-wider mb-1">Shipping</dt>
+                    <dd className="font-semibold text-white">Free (3-5 days)</dd>
+                  </div>
                 </div>
-              </dl>
+              </div>
             </div>
           </div>
         </div>

@@ -14,6 +14,9 @@ export interface Product {
   name: string;
   description: string | null;
   price: number;
+  originalPrice: number | null;
+  notes: string | null;
+  size: string | null;
   category: string | null;
   isActive: boolean;
   availableStock: number;

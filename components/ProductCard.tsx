@@ -86,6 +86,16 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         {/* Price and Cart Controls */}
         <div className="flex items-center justify-between">
           <div>
+            {product.originalPrice && (
+              <div className="mb-1">
+                <Price
+                  amount={product.originalPrice}
+                  className="text-sm font-medium text-gray-400 line-through"
+                  symbolClassName="text-gray-400"
+                  symbolSize={14}
+                />
+              </div>
+            )}
             <Price
               amount={product.price}
               className="text-xl font-bold text-[var(--gold)]"

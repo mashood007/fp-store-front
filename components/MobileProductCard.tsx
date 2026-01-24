@@ -52,12 +52,24 @@ export default function MobileProductCard({ product, onAddToCart }: MobileProduc
 
                 {/* Price and Cart Controls */}
                 <div className="flex items-center justify-between gap-2">
-                    <Price
-                        amount={product.price}
-                        className="text-sm font-bold text-[var(--gold)]"
-                        symbolClassName="text-[var(--gold)]"
-                        symbolSize={12}
-                    />
+                    <div>
+                        {product.originalPrice && (
+                            <div className="mb-0.5">
+                                <Price
+                                    amount={product.originalPrice}
+                                    className="text-xs font-medium text-gray-400 line-through"
+                                    symbolClassName="text-gray-400"
+                                    symbolSize={10}
+                                />
+                            </div>
+                        )}
+                        <Price
+                            amount={product.price}
+                            className="text-sm font-bold text-[var(--gold)]"
+                            symbolClassName="text-[var(--gold)]"
+                            symbolSize={12}
+                        />
+                    </div>
 
                     {cartQuantity > 0 ? (
                         // Quantity controls when item is in cart
