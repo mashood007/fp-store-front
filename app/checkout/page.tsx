@@ -2,14 +2,19 @@
 
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
-import { createOrder, createStripeCheckoutSession, verifyCoupon } from "@/lib/api";
+import {
+  createOrder,
+  createStripeCheckoutSession,
+  getDeliverySettings,
+  verifyCoupon,
+} from "@/lib/api";
 import { formatPriceNumber } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, CreditCard, ShoppingBag, User, Tag, X, Check } from "lucide-react";
 import Price from "@/components/Price";
-import { Address } from "@/types";
+import { Address, DeliverySettings } from "@/types";
 
 export default function CheckoutPage() {
   const UAE_EMIRATES = [
@@ -43,6 +48,10 @@ export default function CheckoutPage() {
   } | null>(null);
   const [couponError, setCouponError] = useState("");
   const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
+  const [deliverySettings, setDeliverySettings] = useState<DeliverySettings>({
+    deliveryCharge: 15,
+    minimumPurchaseForFreeDelivery: 200,
+  });
 
   const [formData, setFormData] = useState({
     email: "",
@@ -99,6 +108,20 @@ export default function CheckoutPage() {
       }));
     }
   }, [customer]);
+
+  // Fetch delivery settings from store API
+  useEffect(() => {
+    const loadDeliverySettings = async () => {
+      try {
+        const settings = await getDeliverySettings();
+        setDeliverySettings(settings);
+      } catch (err) {
+        console.error("Failed to fetch delivery settings, using defaults:", err);
+      }
+    };
+
+    loadDeliverySettings();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -202,7 +225,10 @@ export default function CheckoutPage() {
     const subtotal = getCartTotal();
     const discount = appliedCoupon?.discount || 0;
     const taxableAmount = Math.max(0, subtotal - discount);
-    const shipping = taxableAmount >= 200 ? 0 : 15;
+    const shipping =
+      taxableAmount >= deliverySettings.minimumPurchaseForFreeDelivery
+        ? 0
+        : deliverySettings.deliveryCharge;
     const vat = taxableAmount * 0.05;
     return subtotal + shipping + vat - discount;
   };
@@ -212,7 +238,9 @@ export default function CheckoutPage() {
     const subtotal = getCartTotal();
     const discount = appliedCoupon?.discount || 0;
     const taxableAmount = Math.max(0, subtotal - discount);
-    return taxableAmount >= 200 ? 0 : 15;
+    return taxableAmount >= deliverySettings.minimumPurchaseForFreeDelivery
+      ? 0
+      : deliverySettings.deliveryCharge;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -994,7 +1022,7 @@ export default function CheckoutPage() {
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                       <span className="font-medium">
-                        You saved <Price amount={appliedCoupon.discount + (calculateShipping() === 0 ? 15 : 0)} className="inline" symbolClassName="text-green-400" symbolSize={12} /> total!
+                        You saved <Price amount={appliedCoupon.discount + (calculateShipping() === 0 ? deliverySettings.deliveryCharge : 0)} className="inline" symbolClassName="text-green-400" symbolSize={12} /> total!
                       </span>
                     </div>
                   ) : appliedCoupon ? (
@@ -1011,7 +1039,9 @@ export default function CheckoutPage() {
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
-                      <span className="font-medium">Free shipping on orders over AED 200!</span>
+                      <span className="font-medium">
+                        Free shipping on orders over AED {formatPriceNumber(deliverySettings.minimumPurchaseForFreeDelivery)}!
+                      </span>
                     </div>
                   ) : null}
                 </div>

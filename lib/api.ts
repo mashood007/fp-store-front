@@ -1,4 +1,10 @@
-import { Product, ProductsResponse, Banner, BannersResponse } from "@/types";
+import {
+  Product,
+  ProductsResponse,
+  Banner,
+  BannersResponse,
+  DeliverySettings,
+} from "@/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api/store";
 
@@ -310,6 +316,19 @@ export async function trackGuestOrder(
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.error || "Failed to track order");
+  }
+
+  return response.json();
+}
+
+// Delivery Settings API
+export async function getDeliverySettings(): Promise<DeliverySettings> {
+  const response = await fetch(`${API_BASE_URL}/delivery-settings`, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch delivery settings");
   }
 
   return response.json();

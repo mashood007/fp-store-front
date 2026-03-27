@@ -1,14 +1,43 @@
 "use client";
 
 import { useCart } from "@/context/CartContext";
+import { getDeliverySettings } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
-import { getImageUrl } from "@/lib/utils";
+import { formatPriceNumber, getImageUrl } from "@/lib/utils";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Shield, Truck, Package, Tag } from "lucide-react";
 import Price from "@/components/Price";
+import { useEffect, useMemo, useState } from "react";
+import { DeliverySettings } from "@/types";
 
 export default function CartPage() {
   const { items, updateQuantity, removeFromCart, getCartTotal } = useCart();
+  const [deliverySettings, setDeliverySettings] = useState<DeliverySettings>({
+    deliveryCharge: 15,
+    minimumPurchaseForFreeDelivery: 200,
+  });
+
+  useEffect(() => {
+    const loadDeliverySettings = async () => {
+      try {
+        const settings = await getDeliverySettings();
+        setDeliverySettings(settings);
+      } catch (err) {
+        console.error("Failed to fetch delivery settings, using defaults:", err);
+      }
+    };
+
+    loadDeliverySettings();
+  }, []);
+
+  const shippingCost = useMemo(() => {
+    const subtotal = getCartTotal();
+    return subtotal >= deliverySettings.minimumPurchaseForFreeDelivery
+      ? 0
+      : deliverySettings.deliveryCharge;
+  }, [deliverySettings.deliveryCharge, deliverySettings.minimumPurchaseForFreeDelivery, getCartTotal]);
+
+  const estimatedTotal = getCartTotal() + shippingCost;
 
   if (items.length === 0) {
     return (
@@ -183,7 +212,16 @@ export default function CartPage() {
                   </div>
                   <div className="flex justify-between text-white/70">
                     <span>Shipping</span>
-                    <span className="font-semibold text-[var(--gold)]">Free</span>
+                    {shippingCost === 0 ? (
+                      <span className="font-semibold text-[var(--gold)]">Free</span>
+                    ) : (
+                      <Price
+                        amount={shippingCost}
+                        className="font-semibold text-white"
+                        symbolClassName="text-white"
+                        symbolSize={16}
+                      />
+                    )}
                   </div>
                   <div className="flex justify-between text-white/70">
                     <span>Tax</span>
@@ -194,7 +232,7 @@ export default function CartPage() {
                     <div className="flex justify-between">
                       <span className="text-lg font-semibold text-white">Total</span>
                       <Price
-                        amount={getCartTotal()}
+                        amount={estimatedTotal}
                         className="text-2xl font-bold text-[var(--gold)]"
                         symbolClassName="text-[var(--gold)]"
                         symbolSize={24}
@@ -226,7 +264,7 @@ export default function CartPage() {
                 <div className="space-y-4">
                   {[
                     { icon: Shield, text: "Secure Payment" },
-                    { icon: Truck, text: "Free Shipping" },
+                    { icon: Truck, text: `Free Shipping over AED ${formatPriceNumber(deliverySettings.minimumPurchaseForFreeDelivery)}` },
                     { icon: Package, text: "Easy Returns" },
                   ].map((badge, index) => (
                     <div key={index} className="flex items-center gap-3">

@@ -264,3 +264,8 @@ export interface CouponVerificationResponse {
   error?: string;
 }
 
+export interface DeliverySettings {
+  deliveryCharge: number;
+  minimumPurchaseForFreeDelivery: number;
+}
+
