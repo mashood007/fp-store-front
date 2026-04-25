@@ -306,6 +306,21 @@ export async function verifyCoupon(
   return response.json();
 }
 
+// Guest Order Tracking API
+export async function trackGuestOrder(
+  email: string,
+  orderNumber: string
+): Promise<{ order: Order }> {
+  const response = await fetch(`${API_BASE_URL}/orders/track?email=${encodeURIComponent(email)}&orderNumber=${encodeURIComponent(orderNumber)}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || "Failed to track order");
+  }
+
+  return response.json();
+}
+
 
 // Delivery Settings API
 export async function getDeliverySettings(): Promise<DeliverySettings> {
