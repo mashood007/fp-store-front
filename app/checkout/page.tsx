@@ -35,8 +35,7 @@ export default function CheckoutPage() {
   const [error, setError] = useState("");
   const [orderId, setOrderId] = useState<string | null>(null);
   const [checkoutId, setCheckoutId] = useState<string | null>(null);
-  const [checkoutType, setCheckoutType] = useState<'guest' | 'authenticated'>('authenticated');
-  const [checkoutTypeSelected, setCheckoutTypeSelected] = useState(false);
+  // Remove checkoutType and checkoutTypeSelected as we only allow authenticated checkout now
 
   // Coupon state
   const [couponCode, setCouponCode] = useState("");
@@ -74,15 +73,12 @@ export default function CheckoutPage() {
   });
 
   // Set default checkout type based on authentication status
+  // Redirect to login if not authenticated
   useEffect(() => {
-    if (!isLoading) {
-      if (isAuthenticated) {
-        setCheckoutType('authenticated');
-        setCheckoutTypeSelected(true);
-      }
-      // For unauthenticated users, don't auto-select - let them choose
+    if (!isLoading && !isAuthenticated) {
+      router.push("/auth/login?redirect=/checkout");
     }
-  }, [isAuthenticated, isLoading]);
+  }, [isAuthenticated, isLoading, router]);
 
   // Pre-fill form with customer data
   useEffect(() => {
@@ -246,9 +242,10 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // For authenticated checkout, require token
-    if (checkoutType === 'authenticated' && (!token || !isAuthenticated)) {
+    // Authenticated checkout is now mandatory
+    if (!token || !isAuthenticated) {
       setError("Please login to continue");
+      router.push("/auth/login?redirect=/checkout");
       return;
     }
 
@@ -281,8 +278,8 @@ export default function CheckoutPage() {
         couponCode: appliedCoupon?.code,
       };
 
-      // Use token for authenticated orders, null for guest orders
-      const authToken = checkoutType === 'authenticated' ? token : null;
+      // Use token for all orders
+      const authToken = token;
       const order = await createOrder(orderData, authToken);
       setOrderId(order.id);
 
@@ -328,87 +325,6 @@ export default function CheckoutPage() {
     );
   }
 
-  // Checkout type selection - show if not authenticated and no type selected yet
-  if (!isAuthenticated && !checkoutTypeSelected) {
-    return (
-      <div className="min-h-screen bg-black py-20">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <Link
-            href="/cart"
-            className="mb-8 inline-flex items-center gap-2 text-[var(--gold)] hover:text-[var(--gold-light)] transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Cart
-          </Link>
-
-          <div className="text-center mb-8">
-            <h1 className="font-luxury text-4xl font-bold text-white mb-4">
-              Checkout Options
-            </h1>
-            <p className="text-white/70">
-              Choose how you&apos;d like to proceed with your order
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Guest Checkout */}
-            <div
-              onClick={() => {
-                setCheckoutType('guest');
-                setCheckoutTypeSelected(true);
-              }}
-              className="cursor-pointer rounded-lg glass p-6 hover:bg-white/10 transition-all border border-transparent hover:border-[var(--gold)]/30"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="rounded-full bg-[var(--gold)]/20 p-3">
-                  <User className="h-6 w-6 text-[var(--gold)]" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-white">Continue as Guest</h3>
-                  <p className="text-sm text-white/60">Quick checkout without creating an account</p>
-                </div>
-              </div>
-              <ul className="text-sm text-white/70 space-y-1">
-                <li>• Fast and simple process</li>
-                <li>• No account required</li>
-                <li>• Track order via email</li>
-              </ul>
-            </div>
-
-            {/* Authenticated Checkout */}
-            <div
-              onClick={() => router.push("/auth/login?redirect=/checkout")}
-              className="cursor-pointer rounded-lg glass p-6 hover:bg-white/10 transition-all border border-transparent hover:border-[var(--gold)]/30"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="rounded-full bg-[var(--gold)]/20 p-3">
-                  <User className="h-6 w-6 text-[var(--gold)]" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-white">Sign In</h3>
-                  <p className="text-sm text-white/60">Use your existing account</p>
-                </div>
-              </div>
-              <ul className="text-sm text-white/70 space-y-1">
-                <li>• Access order history</li>
-                <li>• Save shipping details</li>
-                <li>• Faster future checkouts</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/auth/register"
-              className="text-[var(--gold)] hover:text-[var(--gold-light)] transition-colors text-sm"
-            >
-              Don&apos;t have an account? Create one for better experience →
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Empty cart
   if (items.length === 0) {
@@ -500,27 +416,8 @@ export default function CheckoutPage() {
             Checkout
           </h1>
           <p className="text-white/70 mt-2">
-            {checkoutType === 'authenticated'
-              ? `Complete your order as ${customer?.name}`
-              : 'Complete your order as a guest'
-            }
+            Complete your order as {customer?.name}
           </p>
-          {checkoutType === 'guest' && (
-            <div className="mt-4 rounded-lg bg-blue-500/10 border border-blue-500/30 px-4 py-3">
-              <div className="flex items-start gap-3">
-                <User className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <p className="text-blue-400 font-medium text-sm">Guest Checkout</p>
-                  <p className="text-blue-400/70 text-sm mt-1">
-                    You&apos;re checking out without an account. You&apos;ll receive order updates via email.
-                    <Link href="/auth/register" className="ml-2 underline hover:text-blue-300">
-                      Create an account
-                    </Link> for a better experience.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         {error && (

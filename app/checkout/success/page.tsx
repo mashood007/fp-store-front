@@ -47,20 +47,17 @@ function SuccessContent() {
 
           <p className="mb-8 text-lg text-white/70">
             Thank you for your purchase! We&apos;ve sent a confirmation email with your order details.
-            {isAuthenticated
-              ? " You can track your order progress in your account."
-              : " You can track your order status using the link below."
-            }
+            You can track your order progress in your account.
           </p>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href={isAuthenticated ? "/account/orders" : `/track-order?orderNumber=${orderNumber || ""}&email=${email || ""}`}
+              href="/account/orders"
               className="inline-flex items-center justify-center gap-2 rounded-lg luxury-button px-8 py-4 font-medium text-black transition-all hover:scale-105"
             >
               <Package className="h-5 w-5" />
-              {isAuthenticated ? "View Order Details" : "Track Your Order"}
+              View Order Details
             </Link>
             <Link
               href="/products"
